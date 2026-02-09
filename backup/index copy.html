@@ -1,0 +1,1678 @@
+﻿<!DOCTYPE html>
+<!-- FIX: Menambahkan class 'dark' permanen di sini -->
+<html lang="id" class="dark scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jurusan RPL | Rekayasa Perangkat Lunak</title>
+
+    <!-- Meta tags for SEO -->
+    <meta name="description"
+        content="Jurusan Rekayasa Perangkat Lunak SMK IT Alhidayah - Belajar coding, development, dan teknologi modern dengan pendekatan praktis dan berlandaskan iman.">
+    <meta name="keywords"
+        content="RPL, Rekayasa Perangkat Lunak, SMK IT Alhidayah, coding, programming, web development, mobile apps, UI/UX, IoT">
+    <meta name="author" content="SMK IT Alhidayah">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph meta tags for social sharing -->
+    <meta property="og:title" content="Jurusan RPL | Rekayasa Perangkat Lunak">
+    <meta property="og:description"
+        content="Jurusan Rekayasa Perangkat Lunak SMK IT Alhidayah - Belajar coding, development, dan teknologi modern dengan pendekatan praktis dan berlandaskan iman.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://smkitalhidayah.sch.id/rpl">
+    <meta property="og:image" content="https://smkitalhidayah.sch.id/rpl/og-image.jpg">
+
+    <!-- Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Jurusan RPL | Rekayasa Perangkat Lunak">
+    <meta name="twitter:description"
+        content="Jurusan Rekayasa Perangkat Lunak SMK IT Alhidayah - Belajar coding, development, dan teknologi modern.">
+    <meta name="twitter:image" content="https://smkitalhidayah.sch.id/rpl/twitter-image.jpg">
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://smkitalhidayah.sch.id/rpl">
+
+    <!-- Preload critical resources -->
+    <link rel="preload"
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+        as="style">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
+
+    <!-- DNS prefetch for external domains -->
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="//api.dicebear.com">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Plus Jakarta Sans & Sora -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/components.css">
+
+    <!-- Konfigurasi Tailwind Custom -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class', // Tetap menggunakan class strategy
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                        heading: ['Sora', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#22D3EE', // Warna aksen utama
+                        primaryDark: '#0891B2',
+                        secondary: '#3B82F6',
+                        dark: '#0B1020', // Background Lebih Gelap & Deep
+                        card: '#121A2B',
+                        border: 'rgba(255, 255, 255, 0.10)', // Border lebih halus
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    },
+                    backgroundImage: {
+                        'gradient-primary': 'linear-gradient(135deg, #22D3EE 0%, #3B82F6 100%)', // Gradient Logo
+                        'glass': 'linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%)', // Gradient Kaca Halus
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar - Global */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0B1020;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #22D3EE;
+        }
+
+        /* Utility Hide Scrollbar */
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Gradient Text Helper */
+        .text-gradient {
+            background: linear-gradient(to right, #22D3EE, #3B82F6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Grid Pattern - Lebih Halus */
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
+
+        /* Glass Card Base Style */
+        .glass-card {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .glass-card:hover {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.02) 100%);
+            border-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Glass Button */
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+        }
+
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Gradient Mask */
+        .mask-gradient-x {
+            mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+        }
+
+        /* Animations */
+        .typing-dot {
+            animation: typing 1.4s infinite ease-in-out both;
+        }
+
+        .typing-dot:nth-child(1) {
+            animation-delay: -0.32s;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: -0.16s;
+        }
+
+        @keyframes typing {
+
+            0%,
+            80%,
+            100% {
+                transform: scale(0);
+            }
+
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        /* Chat window animation */
+        .chat-enter {
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Modern Glassmorphism Buttons (Premium Look) */
+        .btn-glass-modern {
+            position: relative;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow:
+                0 0 0 1px rgba(0, 0, 0, 0.2),
+                0 1px 2px 0 rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .btn-glass-modern:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow:
+                0 0 0 1px rgba(0, 0, 0, 0.2),
+                0 10px 30px -10px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-glass-modern-primary {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(59, 130, 246, 0.15) 100%);
+            border-color: rgba(34, 211, 238, 0.3);
+            color: #fff;
+            box-shadow:
+                0 0 0 1px rgba(34, 211, 238, 0.1),
+                0 1px 2px 0 rgba(0, 0, 0, 0.2),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.15);
+        }
+
+        .btn-glass-modern-primary:hover {
+            background: linear-gradient(135deg, rgba(34, 211, 238, 0.25) 0%, rgba(59, 130, 246, 0.25) 100%);
+            border-color: rgba(34, 211, 238, 0.5);
+            box-shadow:
+                0 0 0 1px rgba(34, 211, 238, 0.2),
+                0 10px 40px -10px rgba(34, 211, 238, 0.4),
+                inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+        }
+    </style>
+</head>
+
+<body class="bg-dark text-slate-300 font-sans selection:bg-primary selection:text-white relative overflow-x-hidden">
+
+    <!-- Background Decoration -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-0 left-0 w-full h-full bg-grid"></div>
+        <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px]"></div>
+    </div>
+
+    <!-- Navbar -->
+    <nav id="navbar"
+        class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent backdrop-blur-md"
+        role="navigation" aria-label="Main navigation">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="#" class="font-heading font-bold text-2xl text-white flex items-center gap-2"
+                aria-label="RPL AIS Home">
+                <div
+                    class="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                    <i class="fa-solid fa-code text-white text-sm"></i>
+                </div>
+                RPL<span class="text-primary">-AIS</span>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="#about"
+                    class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tentang</a>
+                <a href="#stack" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tech
+                    Stack</a>
+                <a href="#prospek"
+                    class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Prospek</a>
+                <a href="#siswa" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Siswa</a>
+            </div>
+
+            <!-- CTA Button -->
+            <div class="flex items-center gap-4">
+                <button class="btn-mobile-menu md:hidden" onclick="toggleMobileMenu()" aria-label="Toggle mobile menu"
+                    aria-expanded="false">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden bg-[#16191E] border-b border-white/10 absolute w-full px-6 py-4 flex flex-col gap-4 shadow-2xl">
+            <a href="#about" class="block text-slate-300 hover:text-primary">Tentang</a>
+            <a href="#stack" class="block text-slate-300 hover:text-primary">Tech Stack</a>
+            <a href="#prospek" class="block text-slate-300 hover:text-primary">Prospek</a>
+            <a href="#siswa" class="block text-slate-300 hover:text-primary">Siswa</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="section-shell section-hero relative z-10 pt-40 pb-20 px-6 max-w-7xl mx-auto text-center" role="banner">
+        <div
+            class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-semibold text-primary mb-8 animate-float backdrop-blur-md">
+            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+            Rekayasa Perangkat Lunak - AIS
+        </div>
+
+        <h1 class="font-heading text-5xl md:text-7xl font-bold text-white mb-6 leading-tight tracking-tight">
+            Selamat Datang di <br>
+            <span class="text-gradient drop-shadow-sm">RPL SMK IT Alhidayah</span>
+        </h1>
+
+        <p class="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Bukan sekadar ngoding. Di SMK IT Alhidayah, kamu belajar memecahkan masalah nyata dengan teknologi, logika,
+            dan kreativitas berlandaskan iman.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onclick="toggleChat()"
+                class="btn-base btn-lg btn-glass-modern btn-glass-modern-primary btn-hero btn-ripple"
+                aria-label="Chat with AI assistant">
+                <i class="fa-solid fa-sparkles"></i> Tanya AI Tentang RPL
+            </button>
+            <a href="#siswa" class="btn-base btn-lg btn-glass-modern btn-hero">
+                <i class="fa-solid fa-layer-group"></i> Lihat Project
+            </a>
+        </div>
+
+        <div
+            class="mt-16 mx-auto max-w-4xl bg-[#0d0f12] rounded-2xl border border-white/10 shadow-2xl overflow-hidden text-left relative group hover:border-white/20 transition-colors">
+            <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-[80px] pointer-events-none">
+            </div>
+
+            <div class="flex items-center gap-2 px-4 py-3 bg-[#16191e] border-b border-white/5">
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                </div>
+                <span class="text-xs text-slate-500 ml-3 font-mono">script.js</span>
+            </div>
+            <div class="p-6 font-mono text-sm overflow-x-auto relative z-10">
+                <div class="text-slate-300 leading-relaxed">
+                    <span class="text-purple-400">class</span> <span class="text-yellow-300">SiswaRPL</span> { <br>
+                    &nbsp;&nbsp;<span class="text-purple-400">constructor</span>() { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">this</span>.skills = [<span
+                        class="text-green-400">"JavaScript"</span>, <span class="text-green-400">"Logic"</span>, <span
+                        class="text-green-400">"Design"</span>]; <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-orange-300">this</span>.future = <span
+                        class="text-green-400">"Bright"</span>; <br>
+                    &nbsp;&nbsp;} <br>
+                    <br>
+                    &nbsp;&nbsp;<span class="text-blue-400">createImpact</span>() { <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span class="text-purple-400">return</span> <span
+                        class="text-green-400">"Building solutions for the world..."</span>; <br>
+                    &nbsp;&nbsp;} <br>
+                    }
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Bento Grid Section -->
+    <section id="about" class="section-shell relative z-10 py-20 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="section-title font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Kenapa
+                    Memilih RPL?</h2>
+                <p class="section-lead text-slate-600 dark:text-slate-400">Kombinasi skill teknis dan soft skill yang dibutuhkan
+                    industri saat ini.</p>
+            </div>
+
+            <div class="about-layout">
+                <div class="about-bento-grid grid grid-cols-1 md:grid-cols-3 md:grid-rows-3 gap-6 auto-rows-[minmax(160px,auto)]">
+
+                <!-- Card 1 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.14);"
+                    class="bento-card col-span-1 md:col-span-2 md:row-span-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-7 md:p-8 flex flex-col justify-between relative overflow-hidden group shadow-none">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-6 border border-blue-500/20">
+                            <i class="fa-solid fa-laptop-code text-white text-xl"></i>
+                        </div>
+                        <h3 class="font-heading text-2xl md:text-[2rem] font-bold text-slate-900 dark:text-white mb-3">Fullstack
+                            Development</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Kami tidak hanya mengajarkan satu
+                            bahasa. Kamu akan belajar ekosistem lengkap mulai dari Frontend hingga Backend.</p>
+                    </div>
+                    <div class="relative z-10 mt-8 flex gap-2.5 flex-wrap">
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-slate-300">HTML/CSS</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-slate-300">JavaScript</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-slate-300">PHP/Laravel</span>
+                        <span
+                            class="px-3 py-1 bg-white/5 border border-white/10 rounded-lg text-xs font-mono text-slate-300">Node.js</span>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.14);"
+                    class="bento-card col-span-1 md:col-span-1 md:row-span-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 text-center flex flex-col items-center justify-center shadow-none relative overflow-hidden group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-20 h-20 mx-auto rounded-full border-4 border-primary/20 flex items-center justify-center mb-4 relative">
+                            <i class="fa-solid fa-trophy text-3xl text-yellow-500"></i>
+                            <div
+                                class="absolute inset-0 border-4 border-primary rounded-full border-t-transparent animate-spin">
+                            </div>
+                        </div>
+                        <p class="text-xs uppercase tracking-[0.16em] text-primary/90 mb-2">Outcome</p>
+                        <h3 class="text-4xl font-bold text-slate-900 dark:text-white mb-1">95%</h3>
+                        <p class="text-sm text-slate-500 dark:text-slate-400">Lulusan Bekerja atau Kuliah di Bidang IT
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.14);"
+                    class="bento-card col-span-1 md:col-span-1 md:row-span-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 relative overflow-hidden shadow-none group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <i class="fa-solid fa-pen-nib absolute -right-4 -bottom-4 text-8xl text-white/5"></i>
+                        <p class="text-xs uppercase tracking-[0.16em] text-primary/90 mb-2">Learning</p>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-2">UI/UX Design</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Mendesain antarmuka aplikasi menggunakan
+                            Figma sebelum coding.</p>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.12);"
+                    id="stack"
+                    class="bento-card col-span-1 md:col-span-2 md:row-span-1 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 md:p-7 flex flex-col md:flex-row items-start md:items-center justify-between gap-5 shadow-none relative overflow-hidden group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 max-w-md">
+                        <p class="text-xs uppercase tracking-[0.16em] text-primary/90 mb-2">Ecosystem</p>
+                        <h3 class="font-heading text-xl md:text-2xl font-bold text-slate-900 dark:text-white">Komunitas & Lomba</h3>
+                        <p class="text-slate-600 dark:text-slate-400 text-sm mt-2">LKS, Hackathon, mentoring lintas angkatan, dan Project Based
+                            Learning.</p>
+                    </div>
+                    <div class="flex -space-x-2.5 relative z-10 shrink-0">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix"
+                            class="w-10 h-10 rounded-full border-2 border-[#16191E]" alt="Felix - Student">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka"
+                            class="w-10 h-10 rounded-full border-2 border-[#16191E]" alt="Aneka - Student">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John"
+                            class="w-10 h-10 rounded-full border-2 border-[#16191E]" alt="John - Student">
+                        <div
+                            class="w-10 h-10 rounded-full border-2 border-[#16191E] bg-primary flex items-center justify-center text-xs font-bold text-white">
+                            +50</div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.13);"
+                    class="bento-card col-span-1 md:col-span-1 md:row-span-1 md:col-start-3 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-6 relative overflow-hidden shadow-none group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <p class="text-xs uppercase tracking-[0.16em] text-primary/90 mb-2">Project Lab</p>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-2">Build Real Product</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Setiap semester siswa membangun produk nyata dari brief sampai deployment.</p>
+                    </div>
+                </div>
+                </div>
+
+                <aside class="skills-globe-wrap">
+                    <div class="skills-globe-panel">
+                        <div class="skills-globe-heading">
+                            <h3 class="skills-globe-title">Skills Globe</h3>
+                            <p class="skills-globe-subtitle">Eksplorasi teknologi yang dipelajari siswa RPL secara interaktif.</p>
+                            <div class="mt-3 flex flex-wrap gap-2">
+                                <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-primary/15 border border-primary/25 text-primary">Frontend</span>
+                                <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-white/5 border border-white/10 text-slate-300">Backend</span>
+                                <span class="px-3 py-1 text-[11px] font-semibold rounded-full bg-white/5 border border-white/10 text-slate-300">Tools</span>
+                            </div>
+                        </div>
+                        <div id="skills-globe" class="skills-globe loading" aria-label="Skills globe interaktif">
+                            <canvas id="skills-sphere-canvas" class="skills-sphere-canvas" aria-hidden="true"></canvas>
+                            <div class="skills-sphere-fallback" data-skills-fallback>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"
+                                alt="HTML5" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+                                alt="CSS3" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"
+                                alt="JavaScript" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg"
+                                alt="TypeScript" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg"
+                                alt="React" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg"
+                                alt="Node.js" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg"
+                                alt="Laravel" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg"
+                                alt="PHP" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg"
+                                alt="Python" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg"
+                                alt="MySQL" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg"
+                                alt="Docker" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git"
+                                loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg"
+                                alt="WordPress" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg"
+                                alt="Vue.js" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg"
+                                alt="Next.js" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg"
+                                alt="Tailwind CSS" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg"
+                                alt="Flutter" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg"
+                                alt="Firebase" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg"
+                                alt="Figma" loading="lazy" decoding="async"></div>
+                        <div class="skills-sphere-fallback-item"><img
+                                src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg"
+                                alt="Linux" loading="lazy" decoding="async"></div>
+                            </div>
+                        </div>
+                        <p class="text-[11px] text-slate-400/90 mt-2 px-1">Drag untuk eksplorasi teknologi.</p>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Roster Section -->
+    <section id="siswa" class="section-shell relative z-10 py-20 px-0 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 mb-8">
+            <div class="flex flex-col md:flex-row justify-between items-end gap-6">
+                <div>
+                    <h2 class="section-title font-heading text-3xl font-bold text-slate-900 dark:text-white mb-2">Daftar Siswa X RPL
+                    </h2>
+                    <p class="section-lead text-slate-600 dark:text-slate-400">Para talenta muda digital masa depan SMK IT Alhidayah.
+                    </p>
+                </div>
+                <div class="flex gap-2">
+                    <span
+                        class="px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary border border-primary/20">4
+                        Siswa Terbaik</span>
+                    <span
+                        class="px-3 py-1 text-xs font-semibold rounded-full bg-slate-100 dark:bg-white/5 text-slate-500 border border-slate-200 dark:border-white/10">Angkatan
+                        2024</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="relative w-full mask-gradient-x">
+            <div id="student-carousel"
+                class="flex gap-6 overflow-x-auto pb-12 pt-4 px-6 cursor-grab active:cursor-grabbing select-none scrollbar-hide">
+
+                <!-- SET 1 (4 Siswa Utama) -->
+
+                <!-- Siswa 1 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmad"
+                                alt="Ahmad Rizky - Frontend Developer"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Ahmad Rizky</h3>
+                        <p
+                            class="text-sm text-primary font-mono bg-primary/5 inline-block px-3 py-1 rounded-lg border border-primary/10">
+                            Frontend Dev</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Membangun antarmuka yang indah dan responsif adalah
+                            passion saya."</p>
+
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 2 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Siti"
+                                alt="Siti Aminah - UI/UX Designer"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Siti Aminah</h3>
+                        <p
+                            class="text-sm text-purple-500 font-mono bg-purple-500/5 inline-block px-3 py-1 rounded-lg border border-purple-500/10">
+                            UI/UX Designer</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Desain bukan hanya tentang tampilan, tapi tentang
+                            bagaimana itu bekerja."</p>
+
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 3 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Budi"
+                                alt="Budi Santoso - Backend Developer"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Budi Santoso</h3>
+                        <p
+                            class="text-sm text-green-500 font-mono bg-green-500/5 inline-block px-3 py-1 rounded-lg border border-green-500/10">
+                            Backend Dev</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Logika dan struktur data adalah seni yang
+                            tersembunyi di balik layar."</p>
+
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 4 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dewi"
+                                alt="Dewi Lestari - IoT Engineer"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Dewi Lestari</h3>
+                        <p
+                            class="text-sm text-blue-500 font-mono bg-blue-500/5 inline-block px-3 py-1 rounded-lg border border-blue-500/10">
+                            IoT Engineer</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Menghubungkan dunia fisik dengan dunia digital
+                            melalui kode."</p>
+
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SET 2 (DUPLICATE FOR LOOP) -->
+                <!-- Duplikasi dengan logic yang sama persis -->
+
+                <!-- Siswa 1 Duplicate -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ahmad" alt="Ahmad"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Ahmad Rizky</h3>
+                        <p
+                            class="text-sm text-primary font-mono bg-primary/5 inline-block px-3 py-1 rounded-lg border border-primary/10">
+                            Frontend Dev</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Membangun antarmuka yang indah dan responsif adalah
+                            passion saya."</p>
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 2 Duplicate -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Siti" alt="Siti"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Siti Aminah</h3>
+                        <p
+                            class="text-sm text-purple-500 font-mono bg-purple-500/5 inline-block px-3 py-1 rounded-lg border border-purple-500/10">
+                            UI/UX Designer</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Desain bukan hanya tentang tampilan, tapi tentang
+                            bagaimana itu bekerja."</p>
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 3 Duplicate -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Budi" alt="Budi"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Budi Santoso</h3>
+                        <p
+                            class="text-sm text-green-500 font-mono bg-green-500/5 inline-block px-3 py-1 rounded-lg border border-green-500/10">
+                            Backend Dev</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Logika dan struktur data adalah seni yang
+                            tersembunyi di balik layar."</p>
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Siswa 4 Duplicate -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="group w-80 md:w-96 flex-shrink-0 bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 flex flex-col items-center relative overflow-hidden">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10 flex flex-col items-center">
+                        <div
+                            class="w-24 h-24 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white/10 group-hover:border-primary transition-colors">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Dewi" alt="Dewi"
+                                class="w-full h-full object-cover pointer-events-none">
+                        </div>
+                        <h3 class="font-heading font-bold text-xl text-slate-900 dark:text-white mb-2">Dewi Lestari</h3>
+                        <p
+                            class="text-sm text-blue-500 font-mono bg-blue-500/5 inline-block px-3 py-1 rounded-lg border border-blue-500/10">
+                            IoT Engineer</p>
+                        <p class="text-slate-500 text-sm mt-4 mb-6">"Menghubungkan dunia fisik dengan dunia digital
+                            melalui kode."</p>
+                        <a href="#" target="_blank" class="btn-base btn-sm btn-glass btn-student">
+                            <i class="fa-solid fa-arrow-right"></i> Selengkapnya
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Guru Section -->
+    <section id="guru" class="section-shell relative z-10 py-24 px-6">
+        <div class="max-w-7xl mx-auto text-center">
+            <h2 class="section-title font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">Kepala Jurusan
+            </h2>
+            <p class="section-lead text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-12">Dibimbing langsung oleh praktisi
+                berpengalaman.</p>
+
+            <div class="flex justify-center">
+
+                <!-- Guru 1 (Centered & Max Width set) - Spotlight Primary (Red/Orange) -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.16);"
+                    class="w-full max-w-md group bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all duration-300 relative overflow-hidden flex flex-col items-center hover:-translate-y-1">
+
+                    <!-- Spotlight -->
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+
+                    <div
+                        class="relative w-32 h-32 mx-auto rounded-full bg-slate-100 dark:bg-slate-800 mb-6 overflow-hidden border-4 border-white dark:border-[#1A1D24] group-hover:border-primary transition-colors relative z-10">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=PakBudi&clothing=blazerAndShirt&glasses=round"
+                            alt="Bpk. Heryanto, S.Kom - Kepala Program Keahlian RPL" class="w-full h-full object-cover">
+                    </div>
+
+                    <div class="relative z-10 w-full flex flex-col items-center">
+                        <h3 class="font-heading font-bold text-2xl text-slate-900 dark:text-white mb-1">Bpk. Heryanto,
+                            S.Kom</h3>
+                        <p class="text-sm font-bold text-primary uppercase tracking-wider mb-4">Kepala Program Keahlian
+                            RPL</p>
+                        <p class="text-slate-600 dark:text-slate-400 mb-8 leading-relaxed">
+                            "Mencetak talenta digital yang tidak hanya jago coding, tapi juga berakhlak mulia dan siap
+                            bersaing di industri global."
+                        </p>
+
+                        <!-- ADDED BUTTON HERE -->
+                        <a href="#" class="btn-base btn-sm btn-glass btn-teacher-profile">
+                            <i class="fa-solid fa-user-tie"></i> Lihat Profil Lengkap
+                        </a>
+
+                        <div class="flex justify-center gap-6 border-t border-white/10 pt-6 w-full">
+                            <a href="#"
+                                class="text-slate-400 hover:text-primary transition-colors transform hover:scale-110"><i
+                                    class="fa-brands fa-linkedin text-xl"></i></a>
+                            <a href="#"
+                                class="text-slate-400 hover:text-primary transition-colors transform hover:scale-110"><i
+                                    class="fa-brands fa-github text-xl"></i></a>
+                            <a href="#"
+                                class="text-slate-400 hover:text-primary transition-colors transform hover:scale-110"><i
+                                    class="fa-solid fa-envelope text-xl"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Career Path / Prospek Section -->
+    <section id="prospek" class="section-shell relative z-10 py-24 px-6 overflow-hidden">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <span
+                    class="inline-block py-1.5 px-4 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-primary mb-6 tracking-wide">
+                    Ã°Å¸Å¡â‚¬ OPEN BATCH 2024
+                </span>
+                <h2 class="section-title font-heading text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
+                    Siap Menjadi <span class="text-gradient drop-shadow-lg">Digital Talent?</span>
+                </h2>
+                <p class="section-lead text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+                    Bergabunglah dengan ekosistem belajar modern yang mencetak developer handal.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.16);"
+                    class="bento-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 relative overflow-hidden group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 mx-auto rounded-xl bg-primary/20 text-primary flex items-center justify-center mb-6 border border-primary/20">
+                            <i class="fa-solid fa-graduation-cap text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-3">Pembelajaran
+                            Praktis</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Kurikulum berbasis project yang
+                            langsung diterapkan pada industri teknologi.</p>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(59, 130, 246, 0.14);"
+                    class="bento-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 relative overflow-hidden group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 mx-auto rounded-xl bg-green-500/20 text-green-400 flex items-center justify-center mb-6 border border-green-500/20">
+                            <i class="fa-solid fa-users text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-3">Mentor
+                            Berpengalaman</h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">Dibimbing langsung oleh praktisi
+                            industri dengan pengalaman nyata.</p>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div onmousemove="handleSpotlight(event)" style="--spotlight-color: rgba(34, 211, 238, 0.14);"
+                    class="bento-card bg-white/5 backdrop-blur-sm border border-white/10 rounded-3xl p-8 text-center hover:border-primary/50 transition-all hover:-translate-y-1 relative overflow-hidden group">
+                    <div class="pointer-events-none absolute -inset-px opacity-0 group-hover:opacity-100 transition duration-300"
+                        style="background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y), var(--spotlight-color), transparent 40%);">
+                    </div>
+                    <div class="relative z-10">
+                        <div
+                            class="w-16 h-16 mx-auto rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center mb-6 border border-blue-500/20">
+                            <i class="fa-solid fa-briefcase text-2xl"></i>
+                        </div>
+                        <h3 class="font-heading text-xl font-bold text-slate-900 dark:text-white mb-3">Karir Terjamin
+                        </h3>
+                        <p class="text-slate-600 dark:text-slate-400 leading-relaxed">95% lulusan bekerja di industri
+                            teknologi atau melanjutkan kuliah.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="https://smkitalhidayah.sch.id" target="_blank" class="btn-base btn-lg btn-primary btn-cta">
+                    <i class="fa-solid fa-external-link-alt"></i> Kunjungi Website Utama
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Footer -->
+    <footer class="py-12 px-6 bg-dark/50 backdrop-blur-md border-t border-white/5">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+            <div class="text-center md:text-left">
+                <a href="#"
+                    class="font-heading font-bold text-xl text-white flex items-center gap-2 justify-center md:justify-start">
+                    <div class="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                        <i class="fa-solid fa-code text-white text-xs"></i>
+                    </div>
+                    RPL-AIS
+                </a>
+                <p class="text-slate-500 text-sm mt-3">Mencetak Generasi Programmer Masa Depan.</p>
+            </div>
+
+            <div class="flex gap-4">
+                <a href="#" class="btn-footer-social instagram">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+                <a href="#" class="btn-footer-social tiktok">
+                    <i class="fa-brands fa-tiktok"></i>
+                </a>
+                <a href="#" class="btn-footer-social youtube">
+                    <i class="fa-brands fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+        <div class="mt-12 pt-8 border-t border-white/5 text-center text-xs text-slate-600">
+            &copy; 2024 Jurusan RPL. All rights reserved. Crafted with <i
+                class="fa-solid fa-heart text-primary mx-1"></i> by RPL Team.
+        </div>
+    </footer>
+
+    <!-- Chat Widget -->
+    <div class="chat-dock fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+        <!-- Chat Window -->
+        <div id="ai-chat-window" class="chat-widget hidden w-80 sm:w-96 chat-enter transition-all duration-300">
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="chat-brand">
+                    <div class="chat-brand-badge">
+                        <i class="fa-solid fa-robot" aria-hidden="true"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-white font-bold text-sm">RPL AI Mentor ✨</h4>
+                        <p class="chat-status text-xs">Online • Tanya Apa Saja</p>
+                    </div>
+                </div>
+                <button onclick="toggleChat()" class="btn-close" aria-label="Tutup chat AI">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Messages Area -->
+            <div id="chat-messages" class="chat-body">
+                <div class="chat-row chat-row-bot">
+                    <div class="chat-avatar chat-avatar-bot">AI</div>
+                    <div class="chat-bubble chat-bubble-bot">
+                        Halo! 👋 Aku asisten virtual jurusan RPL. Ada yang bisa aku bantu?
+                    </div>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="chat-input-area">
+                <form id="chat-form" onsubmit="handleChatSubmit(event)" class="chat-form">
+                    <input type="text" id="chat-input" placeholder="Ketik pertanyaanmu..."
+                        class="chat-input flex-1 px-4 py-2.5 text-sm text-white outline-none transition-all placeholder-slate-600"
+                        autocomplete="off">
+                    <button type="submit" class="btn-chat-send">
+                        <i class="fa-solid fa-paper-plane text-xs"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Floating Button -->
+        <button onclick="toggleChat()" class="btn-chat-float" aria-label="Buka chat AI">
+            <span>Tanya AI</span>
+            <span class="btn-chat-float-glyph" aria-hidden="true">✦</span>
+        </button>
+    </div>
+
+    <!-- Script Logic -->
+    <script>
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-dark/80', 'border-white/10', 'shadow-lg');
+                navbar.classList.remove('border-transparent');
+            } else {
+                navbar.classList.remove('bg-dark/80', 'border-white/10', 'shadow-lg');
+                navbar.classList.add('border-transparent');
+            }
+        });
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // Carousel Logic
+        const slider = document.getElementById('student-carousel');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+        let autoScrollSpeed = 0.5;
+        let isPaused = false;
+
+        // Improved event listeners with better error handling
+        if (slider) {
+            slider.addEventListener('mouseleave', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mousedown', (e) => {
+                isDown = true;
+                slider.classList.add('active');
+                startX = e.pageX - slider.offsetLeft;
+                scrollLeft = slider.scrollLeft;
+            });
+
+            slider.addEventListener('mouseup', () => {
+                isDown = false;
+                slider.classList.remove('active');
+            });
+
+            slider.addEventListener('mousemove', (e) => {
+                if (!isDown) return;
+                e.preventDefault();
+                const x = e.pageX - slider.offsetLeft;
+                const walk = (x - startX) * 2;
+                slider.scrollLeft = scrollLeft - walk;
+            });
+
+            slider.addEventListener('touchstart', () => { isPaused = true; });
+            slider.addEventListener('touchend', () => { isPaused = false; });
+
+            function autoScroll() {
+                if (!isDown && !isPaused && slider) {
+                    slider.scrollLeft += autoScrollSpeed;
+                    const maxScroll = slider.scrollWidth / 2;
+                    if (slider.scrollLeft >= maxScroll) {
+                        slider.scrollLeft = 0;
+                    }
+                }
+                requestAnimationFrame(autoScroll);
+            }
+            autoScroll();
+        }
+
+        function handleSpotlight(e) {
+            const card = e.currentTarget;
+            if (!card) return;
+
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            card.style.setProperty('--mouse-x', `${x}px`);
+            card.style.setProperty('--mouse-y', `${y}px`);
+        }
+
+        /* GEMINI AI LOGIC */
+        const chatWindow = document.getElementById('ai-chat-window');
+        const chatMessages = document.getElementById('chat-messages');
+        const chatInput = document.getElementById('chat-input');
+        const apiKey = ""; // Add your Gemini API key here
+
+        function toggleChat() {
+            chatWindow.classList.toggle('hidden');
+            if (!chatWindow.classList.contains('hidden')) chatInput.focus();
+        }
+
+        function appendMessage(text, sender) {
+            const isUser = sender === 'user';
+            const div = document.createElement('div');
+            div.className = `chat-row ${isUser ? 'chat-row-user' : 'chat-row-bot'}`;
+            const avatar = isUser
+                ? `<div class="chat-avatar chat-avatar-user"><i class="fa-solid fa-user"></i></div>`
+                : `<div class="chat-avatar chat-avatar-bot">AI</div>`;
+            const bubble = `<div class="chat-bubble ${isUser ? 'chat-bubble-user' : 'chat-bubble-bot'}">${text}</div>`;
+            div.innerHTML = isUser ? bubble + avatar : avatar + bubble;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showTyping() {
+            const div = document.createElement('div');
+            div.id = 'typing-indicator';
+            div.className = "chat-row chat-row-bot";
+            div.innerHTML = `<div class="chat-avatar chat-avatar-bot">AI</div><div class="chat-bubble chat-bubble-bot chat-typing"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>`;
+            chatMessages.appendChild(div);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function removeTyping() { const indicator = document.getElementById('typing-indicator'); if (indicator) indicator.remove(); }
+
+        async function handleChatSubmit(e) {
+            e.preventDefault();
+            const message = chatInput.value.trim();
+            if (!message) return;
+
+            appendMessage(message, 'user');
+            chatInput.value = '';
+            showTyping();
+
+            try {
+                // Check if API key is configured
+                if (!apiKey) {
+                    throw new Error("API key not configured");
+                }
+
+                const responseText = await fetchGeminiWithRetry(message);
+                removeTyping();
+                appendMessage(responseText, 'bot');
+            } catch (error) {
+                removeTyping();
+                appendMessage("Maaf, AI sedang sibuk. Coba lagi nanti ya! 🙏", 'bot');
+                console.error("Gemini Error:", error);
+            }
+        }
+
+        async function fetchGeminiWithRetry(userQuery, retries = 3) {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+            const systemPrompt = "Kamu adalah asisten AI ramah untuk Jurusan RPL SMK IT Alhidayah. Jawab pertanyaan dengan santai, gaul, dan memotivasi.";
+            const payload = {
+                contents: [{ parts: [{ text: userQuery }] }],
+                systemInstruction: { parts: [{ text: systemPrompt }] }
+            };
+
+            for (let i = 0; i < retries; i++) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+
+                    // Check if response has the expected structure
+                    if (data.candidates && data.candidates[0] && data.candidates[0].content && data.candidates[0].content.parts && data.candidates[0].content.parts[0]) {
+                        return data.candidates[0].content.parts[0].text;
+                    } else {
+                        return "Maaf, saya tidak mengerti pertanyaan Anda.";
+                    }
+                } catch (err) {
+                    console.error(`Attempt ${i + 1} failed:`, err);
+                    if (i === retries - 1) throw err;
+                    await new Promise(res => setTimeout(res, 1000 * Math.pow(2, i)));
+                }
+            }
+        }
+
+        const SKILLS_DATA = [
+            { name: "HTML5", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" },
+            { name: "CSS3", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" },
+            { name: "JavaScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" },
+            { name: "TypeScript", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" },
+            { name: "React", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" },
+            { name: "Node.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" },
+            { name: "Laravel", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" },
+            { name: "PHP", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" },
+            { name: "Python", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" },
+            { name: "MySQL", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" },
+            { name: "Docker", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" },
+            { name: "Git", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" },
+            { name: "WordPress", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg" },
+            { name: "Vue.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg" },
+            { name: "Next.js", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" },
+            { name: "Tailwind CSS", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" },
+            { name: "Flutter", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg" },
+            { name: "Firebase", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg" },
+            { name: "Figma", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" },
+            { name: "Linux", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" }
+        ];
+
+        let isThreeLoaded = false;
+        let threeLoadPromise = null;
+
+        function loadThreeJS() {
+            if (isThreeLoaded) return Promise.resolve();
+            if (threeLoadPromise) return threeLoadPromise;
+
+            threeLoadPromise = new Promise((resolve, reject) => {
+                const script = document.createElement("script");
+                script.src = "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js";
+                script.onload = () => {
+                    isThreeLoaded = true;
+                    resolve();
+                };
+                script.onerror = () => reject(new Error("Failed to load Three.js"));
+                document.head.appendChild(script);
+            });
+
+            return threeLoadPromise;
+        }
+
+        function checkWebGLSupport() {
+            try {
+                const canvas = document.createElement("canvas");
+                return !!(
+                    window.WebGLRenderingContext &&
+                    (canvas.getContext("webgl") || canvas.getContext("experimental-webgl"))
+                );
+            } catch {
+                return false;
+            }
+        }
+
+        function distributeOnSphere(count, radius) {
+            if (count <= 0 || radius <= 0) return [];
+
+            const positions = [];
+            const goldenRatio = (1 + Math.sqrt(5)) / 2;
+            const angleIncrement = Math.PI * 2 * goldenRatio;
+
+            for (let i = 0; i < count; i++) {
+                const y = 1 - (i / (count - 1 || 1)) * 2;
+                const radiusAtY = Math.sqrt(1 - y * y);
+                const theta = angleIncrement * i;
+                const x = Math.cos(theta) * radiusAtY;
+                const z = Math.sin(theta) * radiusAtY;
+                positions.push({ x: x * radius, y: y * radius, z: z * radius });
+            }
+
+            return positions;
+        }
+
+        function calculateResponsiveRadius(viewportWidth, desktopRadius = 280, mobileRadius = 210, breakpoint = 768) {
+            return viewportWidth < breakpoint ? mobileRadius : desktopRadius;
+        }
+
+        class SkillsSphere {
+            constructor(container, skills) {
+                this.container = container;
+                this.skills = skills;
+                this.scene = null;
+                this.camera = null;
+                this.renderer = null;
+                this.sphereGroup = null;
+                this.nodes = [];
+                this.raycaster = null;
+                this.mouse = { x: 0, y: 0 };
+                this.animationFrameId = null;
+                this.intersectionObserver = null;
+                this.isDragging = false;
+                this.lastPosition = { x: 0, y: 0 };
+                this.momentum = { x: 0, y: 0 };
+                this.dragSensitivity = 0.005;
+                this.momentumDecay = 0.95;
+                this.autoRotateSpeed = 0.002;
+                this.lastInteractionTime = 0;
+                this.currentRadius = 280;
+                this.isVisible = true;
+                this.boundResize = () => this.handleResize();
+            }
+
+            async init() {
+                if (!this.container) return;
+                if (!checkWebGLSupport()) {
+                    this.showFallback();
+                    return;
+                }
+
+                try {
+                    await loadThreeJS();
+                    await this.initThree();
+                } catch {
+                    this.showFallback();
+                }
+            }
+
+            getResponsiveRadius() {
+                return calculateResponsiveRadius(window.innerWidth, 280, 210, 768);
+            }
+
+            async initThree() {
+                const THREE = window.THREE;
+                if (!THREE) return;
+
+                const canvas = this.container.querySelector("#skills-sphere-canvas");
+                if (!canvas) return;
+
+                const width = this.container.clientWidth;
+                const height = this.container.clientHeight;
+                this.currentRadius = this.getResponsiveRadius();
+
+                this.scene = new THREE.Scene();
+                this.camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+                this.camera.position.z = this.currentRadius * 2.5;
+
+                this.renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+                this.renderer.setSize(width, height);
+                this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+                this.sphereGroup = new THREE.Group();
+                this.scene.add(this.sphereGroup);
+                this.raycaster = new THREE.Raycaster();
+
+                const textureMap = await this.preloadTextures();
+                this.createNodes(textureMap);
+
+                this.container.classList.remove("loading");
+                this.setupEventListeners();
+                this.setupVisibilityObserver();
+                this.animate();
+            }
+
+            preloadTextures() {
+                const THREE = window.THREE;
+                if (!THREE) return Promise.resolve(new Map());
+
+                const textureLoader = new THREE.TextureLoader();
+                textureLoader.setCrossOrigin("anonymous");
+                const textureMap = new Map();
+
+                const loaders = this.skills.map((skill) => new Promise((resolve) => {
+                    textureLoader.load(
+                        skill.icon,
+                        (texture) => {
+                            if ("colorSpace" in texture && THREE.SRGBColorSpace) {
+                                texture.colorSpace = THREE.SRGBColorSpace;
+                            } else if (THREE.sRGBEncoding) {
+                                texture.encoding = THREE.sRGBEncoding;
+                            }
+                            textureMap.set(skill.icon, texture);
+                            resolve();
+                        },
+                        undefined,
+                        () => {
+                            textureMap.set(skill.icon, null);
+                            resolve();
+                        }
+                    );
+                }));
+
+                return Promise.all(loaders).then(() => textureMap);
+            }
+
+            createCircleTexture() {
+                const THREE = window.THREE;
+                if (!THREE) return null;
+
+                const size = 128;
+                const canvas = document.createElement("canvas");
+                canvas.width = size;
+                canvas.height = size;
+                const ctx = canvas.getContext("2d");
+                if (!ctx) return null;
+
+                ctx.clearRect(0, 0, size, size);
+                ctx.beginPath();
+                ctx.arc(size / 2, size / 2, size * 0.46, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(255,255,255,1)";
+                ctx.fill();
+
+                const texture = new THREE.CanvasTexture(canvas);
+                texture.needsUpdate = true;
+                return texture;
+            }
+
+            createNodes(textureMap) {
+                const THREE = window.THREE;
+                if (!THREE || !this.sphereGroup) return;
+
+                const radius = this.getResponsiveRadius();
+                const positions = distributeOnSphere(this.skills.length, radius);
+                const nodeSize = radius * 0.25;
+                const circleTexture = this.createCircleTexture();
+                const backplateMaterial = new THREE.SpriteMaterial({
+                    map: circleTexture,
+                    color: 0xffffff,
+                    transparent: true,
+                    opacity: 0.22,
+                    depthWrite: false,
+                    depthTest: false
+                });
+
+                this.skills.forEach((skill, index) => {
+                    const position = positions[index];
+                    if (!position) return;
+                    const texture = textureMap.get(skill.icon);
+                    const spriteMaterial = new THREE.SpriteMaterial({
+                        map: texture || null,
+                        color: texture ? 0xffffff : 0x9ca3af,
+                        transparent: true,
+                        opacity: 1
+                    });
+
+                    const sprite = new THREE.Sprite(spriteMaterial);
+                    sprite.position.set(position.x, position.y, position.z);
+                    sprite.scale.set(nodeSize, nodeSize, 1);
+                    sprite.userData = { baseScale: nodeSize };
+
+                    // Backplate membuat ikon gelap tetap terlihat di background gelap.
+                    const backplate = new THREE.Sprite(backplateMaterial);
+                    backplate.scale.set(1.4, 1.4, 1);
+                    backplate.position.set(0, 0, -0.01);
+                    sprite.add(backplate);
+
+                    this.sphereGroup.add(sprite);
+                    this.nodes.push(sprite);
+                });
+            }
+
+            setupEventListeners() {
+                const canvas = this.container.querySelector("#skills-sphere-canvas");
+                if (!canvas) return;
+
+                canvas.addEventListener("mousedown", (event) => this.handleMouseDown(event));
+                canvas.addEventListener("mousemove", (event) => this.handleMouseMove(event));
+                window.addEventListener("mouseup", () => this.handleMouseUp());
+                canvas.addEventListener("touchstart", (event) => this.handleTouchStart(event), { passive: false });
+                canvas.addEventListener("touchmove", (event) => this.handleTouchMove(event), { passive: false });
+                window.addEventListener("touchend", () => this.handleTouchEnd());
+                window.addEventListener("resize", this.boundResize);
+            }
+
+            setupVisibilityObserver() {
+                if (typeof IntersectionObserver === "undefined") return;
+
+                this.intersectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach((entry) => {
+                        this.isVisible = entry.isIntersecting;
+                    });
+                }, { root: null, rootMargin: "50px", threshold: 0.1 });
+
+                this.intersectionObserver.observe(this.container);
+            }
+
+            handleMouseDown(event) {
+                event.preventDefault();
+                this.isDragging = true;
+                this.lastPosition = { x: event.clientX, y: event.clientY };
+                this.momentum = { x: 0, y: 0 };
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleMouseMove(event) {
+                const rect = this.container.getBoundingClientRect();
+                this.mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+
+                if (!this.isDragging || !this.sphereGroup) return;
+
+                const deltaX = event.clientX - this.lastPosition.x;
+                const deltaY = event.clientY - this.lastPosition.y;
+                this.sphereGroup.rotation.y += deltaX * this.dragSensitivity;
+                this.sphereGroup.rotation.x += deltaY * this.dragSensitivity;
+                this.momentum.x = deltaY * this.dragSensitivity;
+                this.momentum.y = deltaX * this.dragSensitivity;
+                this.lastPosition = { x: event.clientX, y: event.clientY };
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleMouseUp() {
+                this.isDragging = false;
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleTouchStart(event) {
+                if (event.touches.length !== 1) return;
+                event.preventDefault();
+                const touch = event.touches[0];
+                this.isDragging = true;
+                this.lastPosition = { x: touch.clientX, y: touch.clientY };
+                this.momentum = { x: 0, y: 0 };
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleTouchMove(event) {
+                if (event.touches.length !== 1 || !this.sphereGroup) return;
+                event.preventDefault();
+                const touch = event.touches[0];
+                const rect = this.container.getBoundingClientRect();
+                this.mouse.x = ((touch.clientX - rect.left) / rect.width) * 2 - 1;
+                this.mouse.y = -((touch.clientY - rect.top) / rect.height) * 2 + 1;
+
+                if (!this.isDragging) return;
+                const deltaX = touch.clientX - this.lastPosition.x;
+                const deltaY = touch.clientY - this.lastPosition.y;
+                this.sphereGroup.rotation.y += deltaX * this.dragSensitivity;
+                this.sphereGroup.rotation.x += deltaY * this.dragSensitivity;
+                this.momentum.x = deltaY * this.dragSensitivity;
+                this.momentum.y = deltaX * this.dragSensitivity;
+                this.lastPosition = { x: touch.clientX, y: touch.clientY };
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleTouchEnd() {
+                this.isDragging = false;
+                this.lastInteractionTime = Date.now();
+            }
+
+            handleResize() {
+                if (!this.renderer || !this.camera || !this.container) return;
+
+                const width = this.container.clientWidth;
+                const height = this.container.clientHeight;
+                this.camera.aspect = width / height;
+                this.camera.updateProjectionMatrix();
+                this.renderer.setSize(width, height);
+
+                const newRadius = this.getResponsiveRadius();
+                const oldRadius = this.currentRadius || 280;
+                if (Math.abs(newRadius - oldRadius) > 1) {
+                    this.currentRadius = newRadius;
+                    this.repositionNodes(newRadius);
+                    this.camera.position.z = newRadius * 2.5;
+                }
+            }
+
+            repositionNodes(newRadius) {
+                if (!this.nodes.length) return;
+                const positions = distributeOnSphere(this.nodes.length, newRadius);
+                const nodeSize = newRadius * 0.25;
+
+                this.nodes.forEach((node, index) => {
+                    const pos = positions[index];
+                    if (!node || !pos) return;
+                    node.position.set(pos.x, pos.y, pos.z);
+                    node.userData.baseScale = nodeSize;
+                    node.scale.set(nodeSize, nodeSize, 1);
+                });
+            }
+
+            updateMomentum() {
+                if (this.isDragging || !this.sphereGroup) return;
+
+                const hasMomentum = Math.abs(this.momentum.x) > 0.0001 || Math.abs(this.momentum.y) > 0.0001;
+                if (hasMomentum) {
+                    this.sphereGroup.rotation.x += this.momentum.x;
+                    this.sphereGroup.rotation.y += this.momentum.y;
+                    this.momentum.x *= this.momentumDecay;
+                    this.momentum.y *= this.momentumDecay;
+                    if (Math.abs(this.momentum.x) < 0.0001) this.momentum.x = 0;
+                    if (Math.abs(this.momentum.y) < 0.0001) this.momentum.y = 0;
+                    return;
+                }
+
+                const idleTime = Date.now() - this.lastInteractionTime;
+                if (idleTime > 3000) {
+                    this.sphereGroup.rotation.y += this.autoRotateSpeed;
+                }
+            }
+
+            updateBillboards() {
+                if (!this.camera) return;
+                this.nodes.forEach((node) => {
+                    node.quaternion.copy(this.camera.quaternion);
+                });
+            }
+
+            animate() {
+                this.animationFrameId = requestAnimationFrame(() => this.animate());
+                if (!this.isVisible) return;
+                this.updateMomentum();
+                this.updateBillboards();
+                if (this.renderer && this.scene && this.camera) {
+                    this.renderer.render(this.scene, this.camera);
+                }
+            }
+
+            showFallback() {
+                const fallbackGrid = this.container.querySelector("[data-skills-fallback]");
+                const canvas = this.container.querySelector("#skills-sphere-canvas");
+                if (fallbackGrid) fallbackGrid.style.display = "grid";
+                if (canvas) canvas.style.display = "none";
+                this.container.classList.remove("loading");
+            }
+        }
+
+        function initSkillsGlobe() {
+            const container = document.getElementById("skills-globe");
+            if (!container) return;
+            const sphere = new SkillsSphere(container, SKILLS_DATA);
+            sphere.init();
+        }
+
+        initSkillsGlobe();
+
+    </script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

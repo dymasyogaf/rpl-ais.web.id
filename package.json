@@ -1,0 +1,54 @@
+{
+  "name": "rpl-website",
+  "version": "1.1.0",
+  "description": "Website resmi untuk Jurusan Rekayasa Perangkat Lunak SMK IT Alhidayah",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000",
+    "dev": "python -m http.server 8000",
+    "build": "echo 'No build step required for static site'",
+    "deploy": "echo 'Deploy to your preferred hosting platform'",
+    "lint:css": "stylelint assets/css/*.css --config .stylelintrc",
+    "lint:js": "eslint assets/js/*.js --config .eslintrc",
+    "format": "prettier --write .",
+    "test": "echo 'No tests specified yet'"
+  },
+  "keywords": [
+    "rpl",
+    "rekayasa-perangkat-lunak",
+    "smk",
+    "it-alhidayah",
+    "education",
+    "website",
+    "static-site"
+  ],
+  "author": {
+    "name": "SMK IT Alhidayah",
+    "email": "info@smkitalhidayah.sch.id",
+    "url": "https://smkitalhidayah.sch.id"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/smkit-alhidayah/rpl-website"
+  },
+  "bugs": {
+    "url": "https://github.com/smkit-alhidayah/rpl-website/issues"
+  },
+  "homepage": "https://smkitalhidayah.sch.id/rpl",
+  "devDependencies": {
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "stylelint": "^15.0.0",
+    "stylelint-config-standard": "^34.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

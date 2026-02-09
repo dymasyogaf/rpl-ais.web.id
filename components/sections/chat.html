@@ -1,0 +1,49 @@
+<!-- Chat Widget -->
+<div class="chat-dock fixed bottom-6 right-6 z-[100] flex flex-col items-end gap-3">
+    <!-- Chat Window -->
+    <div id="ai-chat-window" class="chat-widget hidden w-80 sm:w-96 chat-enter transition-all duration-300">
+        <!-- Header -->
+        <div class="chat-header">
+            <div class="chat-brand">
+                <div class="chat-brand-badge">
+                    <i class="fa-solid fa-robot" aria-hidden="true"></i>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold text-sm">RPL AI Mentor ✨</h4>
+                    <p class="chat-status text-xs">Online • Tanya Apa Saja</p>
+                </div>
+            </div>
+            <button class="js-toggle-chat btn-close" aria-label="Tutup chat AI">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Messages Area -->
+        <div id="chat-messages" class="chat-body">
+            <div class="chat-row chat-row-bot">
+                <div class="chat-avatar chat-avatar-bot">AI</div>
+                <div class="chat-bubble chat-bubble-bot">
+                    Halo! 👋 Aku asisten virtual jurusan RPL. Ada yang bisa aku bantu?
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area -->
+        <div class="chat-input-area">
+            <form id="chat-form" class="chat-form">
+                <input type="text" id="chat-input" placeholder="Ketik pertanyaanmu..."
+                    class="chat-input flex-1 px-4 py-2.5 text-sm text-white outline-none transition-all placeholder-slate-600"
+                    autocomplete="off">
+                <button type="submit" class="btn-chat-send">
+                    <i class="fa-solid fa-paper-plane text-xs"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Floating Button -->
+    <button class="js-toggle-chat btn-chat-float" aria-label="Buka chat AI">
+        <span>Tanya AI</span>
+        <span class="btn-chat-float-glyph" aria-hidden="true">✦</span>
+    </button>
+</div>

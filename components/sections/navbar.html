@@ -1,0 +1,41 @@
+<nav id="navbar"
+    class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent backdrop-blur-md"
+    role="navigation" aria-label="Main navigation">
+    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+        <!-- Logo -->
+        <a href="#" class="font-heading font-bold text-2xl text-white flex items-center gap-2"
+            aria-label="RPL AIS Home">
+            <div
+                class="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                <i class="fa-solid fa-code text-white text-sm"></i>
+            </div>
+            RPL<span class="text-primary">-AIS</span>
+        </a>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center gap-8">
+            <a href="#about" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tentang</a>
+            <a href="#stack" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tech
+                Stack</a>
+            <a href="#prospek" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Prospek</a>
+            <a href="#siswa" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Siswa</a>
+        </div>
+
+        <!-- CTA Button -->
+        <div class="flex items-center gap-4">
+            <button id="mobile-menu-toggle" class="btn-mobile-menu md:hidden" aria-label="Toggle mobile menu"
+                aria-controls="mobile-menu" aria-expanded="false">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu"
+        class="hidden md:hidden bg-[#16191E] border-b border-white/10 absolute w-full px-6 py-4 flex flex-col gap-4 shadow-2xl">
+        <a href="#about" class="block text-slate-300 hover:text-primary">Tentang</a>
+        <a href="#stack" class="block text-slate-300 hover:text-primary">Tech Stack</a>
+        <a href="#prospek" class="block text-slate-300 hover:text-primary">Prospek</a>
+        <a href="#siswa" class="block text-slate-300 hover:text-primary">Siswa</a>
+    </div>
+</nav>
