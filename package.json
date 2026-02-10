@@ -6,8 +6,8 @@
   "scripts": {
     "start": "python -m http.server 8000",
     "dev": "python -m http.server 8000",
-    "build": "echo 'No build step required for static site'",
-    "deploy": "echo 'Deploy to your preferred hosting platform'",
+    "build": "node scripts/build-static.mjs",
+    "deploy": "npx wrangler deploy",
     "lint:css": "stylelint assets/css/*.css --config .stylelintrc",
     "lint:js": "eslint assets/js/*.js --config .eslintrc",
     "format": "prettier --write .",
