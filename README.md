@@ -26,7 +26,7 @@
 
 ```bash
 # Clone the repository
-Halal di clone asalkan follow ig dulu:
+# Halal di clone asalkan follow ig dulu:
 https://instagram.com/dymasyogaf
 
 git clone https://github.com/your-username/rpl-website.git
@@ -43,3 +43,5 @@ npm run dev
 <div align="center">
   <img src="https://capsule-render.vercel.app/render?type=waving&color=auto&height=200&section=footer&text=Happy%20Coding&fontSize=40" width="100%" />
 </div>
+
+#dymasyogaf
