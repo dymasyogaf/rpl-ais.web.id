@@ -23,19 +23,19 @@
     "static-site"
   ],
   "author": {
-    "name": "SMK IT Alhidayah",
-    "email": "info@smkitalhidayah.sch.id",
-    "url": "https://smkitalhidayah.sch.id"
+    "name": "Dymas Yoga Febratama",
+    "email": "dymasyoga11@gmail.com",
+    "url": "https://dymasyogaf.is-a.dev/"
   },
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/smkit-alhidayah/rpl-website"
+    "url": "https://github.com/dymasyogaf/rpl-website.git"
   },
   "bugs": {
-    "url": "https://github.com/smkit-alhidayah/rpl-website/issues"
+    "url": "https://github.com/dymasyogaf/rpl-website/issues"
   },
-  "homepage": "https://smkitalhidayah.sch.id/rpl",
+  "homepage": "https://rpl-ais.web.id",
   "devDependencies": {
     "eslint": "^8.0.0",
     "prettier": "^3.0.0",
