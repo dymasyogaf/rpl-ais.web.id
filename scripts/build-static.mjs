@@ -4,7 +4,7 @@ import { resolve } from "node:path";
 const ROOT = process.cwd();
 const DIST_DIR = resolve(ROOT, "dist");
 
-const PATHS_TO_COPY = ["index.html", "latihan.html", "latihan", "assets", "components"];
+const PATHS_TO_COPY = ["index.html", "latihan.html", "latihan", "tools", "assets", "components"];
 
 await rm(DIST_DIR, { recursive: true, force: true });
 await mkdir(DIST_DIR, { recursive: true });

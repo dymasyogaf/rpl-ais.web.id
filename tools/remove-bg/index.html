@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="id" class="dark scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remove Background | RPL Tools</title>
+    <meta name="description" content="Remove background gambar langsung dari browser.">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind-config.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/components.css">
+</head>
+
+<body class="bg-dark text-slate-300 font-sans selection:bg-primary selection:text-white relative overflow-x-hidden min-h-screen">
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-0 left-0 w-full h-full bg-grid"></div>
+        <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
+        <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px]"></div>
+    </div>
+
+    <header class="relative z-10 border-b border-white/10 backdrop-blur-md">
+        <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="../" class="font-heading font-bold text-2xl text-white flex items-center gap-2">
+                <div
+                    class="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
+                    <i class="fa-solid fa-scissors text-white text-sm"></i>
+                </div>
+                Remove<span class="text-primary">BG</span>
+            </a>
+            <a href="../"
+                class="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors">
+                <i class="fa-solid fa-arrow-left"></i>
+                Kembali ke Tools
+            </a>
+        </div>
+    </header>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-6 py-10">
+        <section class="mb-8">
+            <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 font-semibold">RPL Tool</p>
+            <h1 class="font-heading text-3xl md:text-4xl font-extrabold text-white mt-2">Remove Background</h1>
+            <p class="text-slate-400 mt-3 max-w-2xl">
+                Upload gambar, klik area background untuk ambil warna target, atur toleransi, lalu download sesuai format yang kamu pilih.
+            </p>
+        </section>
+
+        <section class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <aside class="lg:col-span-2 glass-card rounded-2xl border border-white/10 p-6 h-fit">
+                <label
+                    class="w-full h-36 rounded-xl border-2 border-dashed border-slate-600 hover:border-cyan-400/70 transition flex flex-col items-center justify-center cursor-pointer text-center px-4">
+                    <input id="file-input" type="file" accept="image/*" class="hidden">
+                    <i class="fa-solid fa-upload text-cyan-300 text-xl mb-2"></i>
+                    <span class="text-white font-semibold">Upload Gambar</span>
+                    <span id="file-name" class="text-xs text-slate-400 mt-1">Belum ada file dipilih</span>
+                </label>
+
+                <div class="mt-6 space-y-5">
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Toleransi Warna</span>
+                            <span id="tolerance-value">20</span>
+                        </div>
+                        <input id="tolerance" type="range" min="1" max="100" value="20"
+                            class="w-full accent-cyan-400">
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between text-xs text-slate-400 mb-1">
+                            <span>Skala Ukuran (%)</span>
+                            <span id="scale-value">100</span>
+                        </div>
+                        <input id="scale" type="range" min="10" max="100" step="5" value="100"
+                            class="w-full accent-cyan-400">
+                    </div>
+
+                    <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3">
+                        <p class="text-xs uppercase tracking-wide text-slate-400 mb-2">Warna Target</p>
+                        <div class="flex items-center gap-3">
+                            <div id="target-color-preview"
+                                class="w-9 h-9 rounded-full border border-white/20 bg-white shadow-inner"></div>
+                            <p id="target-color-text" class="text-sm font-mono text-slate-300">RGB(255, 255, 255)</p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-4">
+                        <div>
+                            <label for="download-format" class="text-xs uppercase tracking-wide text-slate-400 block mb-2">Format Download</label>
+                            <select id="download-format"
+                                class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40">
+                                <option value="png">PNG (transparan)</option>
+                                <option value="webp">WEBP (ringan)</option>
+                                <option value="jpeg">JPG (background putih)</option>
+                            </select>
+                        </div>
+
+                        <div id="quality-wrap">
+                            <div class="flex justify-between text-xs text-slate-400 mb-1">
+                                <span>Kualitas Output</span>
+                                <span id="quality-value">90</span>
+                            </div>
+                            <input id="quality" type="range" min="10" max="100" step="5" value="90"
+                                class="w-full accent-cyan-400">
+                            <p id="quality-note" class="text-[11px] text-slate-500 mt-1">
+                                Berlaku untuk JPG/WEBP.
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-2">
+                        <p class="text-xs uppercase tracking-wide text-slate-400">Indikator Ukuran</p>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">File Asli</span>
+                            <span id="original-size" class="text-slate-200 font-medium">-</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">Estimasi Hasil</span>
+                            <span id="output-size" class="text-slate-200 font-medium">-</span>
+                        </div>
+                        <div class="flex items-center justify-between text-sm">
+                            <span class="text-slate-400">Perubahan</span>
+                            <span id="size-change" class="text-cyan-300 font-semibold">-</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+                        <button id="reset-btn"
+                            class="px-4 py-2 rounded-lg border border-red-400/40 text-red-300 hover:bg-red-500/10 transition text-sm font-semibold">
+                            Reset
+                        </button>
+                        <button id="download-btn"
+                            class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:brightness-110 transition text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+                            disabled>
+                            Download PNG
+                        </button>
+                    </div>
+                </div>
+            </aside>
+
+            <section class="lg:col-span-3 glass-card rounded-2xl border border-white/10 p-5">
+                <div class="mb-3 text-xs text-slate-400">
+                    Tip: klik di gambar untuk pilih warna background yang ingin dihapus.
+                </div>
+                <div class="checkerboard rounded-xl border border-white/10 min-h-[280px] md:min-h-[460px] grid place-items-center">
+                    <canvas id="preview-canvas"
+                        class="max-w-full max-h-[70vh] object-contain cursor-crosshair rounded-lg shadow-2xl"></canvas>
+                </div>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const fileInput = document.getElementById("file-input");
+        const fileName = document.getElementById("file-name");
+        const toleranceInput = document.getElementById("tolerance");
+        const toleranceValue = document.getElementById("tolerance-value");
+        const scaleInput = document.getElementById("scale");
+        const scaleValue = document.getElementById("scale-value");
+        const formatSelect = document.getElementById("download-format");
+        const qualityInput = document.getElementById("quality");
+        const qualityValue = document.getElementById("quality-value");
+        const qualityWrap = document.getElementById("quality-wrap");
+        const qualityNote = document.getElementById("quality-note");
+        const resetBtn = document.getElementById("reset-btn");
+        const downloadBtn = document.getElementById("download-btn");
+        const originalSizeText = document.getElementById("original-size");
+        const outputSizeText = document.getElementById("output-size");
+        const sizeChangeText = document.getElementById("size-change");
+        const canvas = document.getElementById("preview-canvas");
+        const colorPreview = document.getElementById("target-color-preview");
+        const colorText = document.getElementById("target-color-text");
+
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        let imageSrc = "";
+        let originalFileSize = 0;
+        let latestOutputBlob = null;
+        let targetColor = { r: 255, g: 255, b: 255 };
+        let exportRequestId = 0;
+
+        function formatBytes(bytes) {
+            if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+            const units = ["B", "KB", "MB", "GB"];
+            let value = bytes;
+            let idx = 0;
+            while (value >= 1024 && idx < units.length - 1) {
+                value /= 1024;
+                idx += 1;
+            }
+            const precision = value >= 100 || idx === 0 ? 0 : 2;
+            return `${value.toFixed(precision)} ${units[idx]}`;
+        }
+
+        function getFormatMeta(format) {
+            if (format === "jpeg") {
+                return { mime: "image/jpeg", extension: "jpg" };
+            }
+            if (format === "webp") {
+                return { mime: "image/webp", extension: "webp" };
+            }
+            return { mime: "image/png", extension: "png" };
+        }
+
+        function isLossyFormat(format) {
+            return format === "jpeg" || format === "webp";
+        }
+
+        function updateDownloadButtonLabel() {
+            const format = formatSelect.value.toUpperCase();
+            downloadBtn.textContent = `Download ${format}`;
+        }
+
+        function updateQualityVisibility() {
+            const lossy = isLossyFormat(formatSelect.value);
+            qualityInput.disabled = !lossy;
+            qualityWrap.classList.toggle("opacity-60", !lossy);
+            qualityNote.textContent = lossy ? "Berlaku untuk JPG/WEBP." : "PNG lossless, kualitas tidak dipakai.";
+        }
+
+        function resetSizeIndicators() {
+            originalSizeText.textContent = "-";
+            outputSizeText.textContent = "-";
+            sizeChangeText.textContent = "-";
+            sizeChangeText.style.color = "";
+        }
+
+        function updateSizeIndicators(outputSize) {
+            originalSizeText.textContent = originalFileSize ? formatBytes(originalFileSize) : "-";
+            outputSizeText.textContent = outputSize ? formatBytes(outputSize) : "-";
+
+            if (!originalFileSize || !outputSize) {
+                sizeChangeText.textContent = "-";
+                sizeChangeText.style.color = "";
+                return;
+            }
+
+            const diff = outputSize - originalFileSize;
+            const percent = (Math.abs(diff) / originalFileSize) * 100;
+
+            if (diff <= 0) {
+                sizeChangeText.style.color = "#86efac";
+                sizeChangeText.textContent = `Lebih kecil ${percent.toFixed(1)}%`;
+            } else {
+                sizeChangeText.style.color = "#fca5a5";
+                sizeChangeText.textContent = `Lebih besar ${percent.toFixed(1)}%`;
+            }
+        }
+
+        function canvasToBlob(type, quality) {
+            return new Promise((resolve) => {
+                canvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                        return;
+                    }
+                    const dataUrl = canvas.toDataURL(type, quality);
+                    const [header, base64] = dataUrl.split(",");
+                    const mime = (header.match(/data:(.*?);base64/) || [])[1] || "application/octet-stream";
+                    const binary = atob(base64 || "");
+                    const bytes = new Uint8Array(binary.length);
+                    for (let i = 0; i < binary.length; i += 1) {
+                        bytes[i] = binary.charCodeAt(i);
+                    }
+                    resolve(new Blob([bytes], { type: mime }));
+                }, type, quality);
+            });
+        }
+
+        async function generateOutputBlob() {
+            if (!canvas.width || !canvas.height) return null;
+
+            const selectedFormat = formatSelect.value;
+            const quality = Number(qualityInput.value) / 100;
+            const { mime } = getFormatMeta(selectedFormat);
+
+            if (selectedFormat !== "jpeg") {
+                return canvasToBlob(mime, quality);
+            }
+
+            // JPG tidak support alpha, jadi isi background putih dulu.
+            const tempCanvas = document.createElement("canvas");
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            const tempCtx = tempCanvas.getContext("2d");
+            tempCtx.fillStyle = "#ffffff";
+            tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+            tempCtx.drawImage(canvas, 0, 0);
+
+            return new Promise((resolve) => {
+                tempCanvas.toBlob((blob) => {
+                    if (blob) {
+                        resolve(blob);
+                        return;
+                    }
+                    const dataUrl = tempCanvas.toDataURL(mime, quality);
+                    const [header, base64] = dataUrl.split(",");
+                    const detectedMime = (header.match(/data:(.*?);base64/) || [])[1] || mime;
+                    const binary = atob(base64 || "");
+                    const bytes = new Uint8Array(binary.length);
+                    for (let i = 0; i < binary.length; i += 1) {
+                        bytes[i] = binary.charCodeAt(i);
+                    }
+                    resolve(new Blob([bytes], { type: detectedMime }));
+                }, mime, quality);
+            });
+        }
+
+        async function refreshExportPreview() {
+            if (!imageSrc || !canvas.width || !canvas.height) {
+                latestOutputBlob = null;
+                updateSizeIndicators(0);
+                downloadBtn.disabled = true;
+                return;
+            }
+
+            const requestId = ++exportRequestId;
+            const blob = await generateOutputBlob();
+            if (requestId !== exportRequestId) return;
+            latestOutputBlob = blob;
+            updateSizeIndicators(blob ? blob.size : 0);
+            downloadBtn.disabled = !blob;
+        }
+
+        function renderTargetColor() {
+            colorPreview.style.backgroundColor = `rgb(${targetColor.r}, ${targetColor.g}, ${targetColor.b})`;
+            colorText.textContent = `RGB(${targetColor.r}, ${targetColor.g}, ${targetColor.b})`;
+        }
+
+        function resetState() {
+            imageSrc = "";
+            originalFileSize = 0;
+            latestOutputBlob = null;
+            exportRequestId += 1;
+            targetColor = { r: 255, g: 255, b: 255 };
+            fileName.textContent = "Belum ada file dipilih";
+            toleranceInput.value = "20";
+            toleranceValue.textContent = "20";
+            scaleInput.value = "100";
+            scaleValue.textContent = "100";
+            formatSelect.value = "png";
+            qualityInput.value = "90";
+            qualityValue.textContent = "90";
+            canvas.width = 0;
+            canvas.height = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            downloadBtn.disabled = true;
+            renderTargetColor();
+            updateDownloadButtonLabel();
+            updateQualityVisibility();
+            resetSizeIndicators();
+        }
+
+        async function processImage() {
+            if (!imageSrc) return;
+
+            const img = new Image();
+            img.onload = async () => {
+                const scale = Number(scaleInput.value) / 100;
+                const newWidth = Math.max(1, Math.floor(img.width * scale));
+                const newHeight = Math.max(1, Math.floor(img.height * scale));
+                canvas.width = newWidth;
+                canvas.height = newHeight;
+
+                ctx.clearRect(0, 0, newWidth, newHeight);
+                ctx.drawImage(img, 0, 0, newWidth, newHeight);
+
+                const imageData = ctx.getImageData(0, 0, newWidth, newHeight);
+                const data = imageData.data;
+                const tolerance = Number(toleranceInput.value);
+                const threshold = tolerance * 4.4;
+
+                for (let i = 0; i < data.length; i += 4) {
+                    const dr = data[i] - targetColor.r;
+                    const dg = data[i + 1] - targetColor.g;
+                    const db = data[i + 2] - targetColor.b;
+                    const distance = Math.sqrt(dr * dr + dg * dg + db * db);
+                    if (distance < threshold) {
+                        data[i + 3] = 0;
+                    }
+                }
+
+                ctx.putImageData(imageData, 0, 0);
+                await refreshExportPreview();
+            };
+            img.src = imageSrc;
+        }
+
+        function onFileChange(event) {
+            const file = event.target.files && event.target.files[0];
+            if (!file) return;
+            fileName.textContent = file.name;
+            originalFileSize = file.size;
+            updateSizeIndicators(0);
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                imageSrc = e.target && e.target.result ? e.target.result : "";
+                processImage();
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function pickTargetColor(event) {
+            if (!imageSrc || !canvas.width || !canvas.height) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((event.clientX - rect.left) * (canvas.width / rect.width));
+            const y = Math.floor((event.clientY - rect.top) * (canvas.height / rect.height));
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+            targetColor = { r: pixel[0], g: pixel[1], b: pixel[2] };
+            renderTargetColor();
+            processImage();
+        }
+
+        async function downloadImage() {
+            if (!latestOutputBlob) {
+                await refreshExportPreview();
+            }
+            if (!latestOutputBlob) return;
+
+            const selectedFormat = formatSelect.value;
+            const { extension } = getFormatMeta(selectedFormat);
+            const url = URL.createObjectURL(latestOutputBlob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = `remove-bg-${Date.now()}.${extension}`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        fileInput.addEventListener("change", onFileChange);
+        toleranceInput.addEventListener("input", () => {
+            toleranceValue.textContent = toleranceInput.value;
+            processImage();
+        });
+        scaleInput.addEventListener("input", () => {
+            scaleValue.textContent = scaleInput.value;
+            processImage();
+        });
+        formatSelect.addEventListener("change", () => {
+            updateDownloadButtonLabel();
+            updateQualityVisibility();
+            refreshExportPreview();
+        });
+        qualityInput.addEventListener("input", () => {
+            qualityValue.textContent = qualityInput.value;
+            if (isLossyFormat(formatSelect.value)) {
+                refreshExportPreview();
+            }
+        });
+        canvas.addEventListener("click", pickTargetColor);
+        downloadBtn.addEventListener("click", downloadImage);
+        resetBtn.addEventListener("click", resetState);
+
+        renderTargetColor();
+        updateDownloadButtonLabel();
+        updateQualityVisibility();
+        resetSizeIndicators();
+    </script>
+
+    <style>
+        .checkerboard {
+            background-image: linear-gradient(45deg, rgba(148, 163, 184, 0.22) 25%, transparent 25%),
+                linear-gradient(-45deg, rgba(148, 163, 184, 0.22) 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, rgba(148, 163, 184, 0.22) 75%),
+                linear-gradient(-45deg, transparent 75%, rgba(148, 163, 184, 0.22) 75%);
+            background-size: 24px 24px;
+            background-position: 0 0, 0 12px, 12px -12px, -12px 0;
+            background-color: #0f172a;
+        }
+    </style>
+</body>
+
+</html>

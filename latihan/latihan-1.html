@@ -71,6 +71,10 @@
                 navbarContainer.querySelectorAll('a[href="latihan/"], a[href="latihan/latihan-1.html"], a[href="latihan.html"]').forEach((link) => {
                     link.setAttribute('href', 'index.html');
                 });
+
+                navbarContainer.querySelectorAll('a[href="tools/"], a[href="tools/index.html"]').forEach((link) => {
+                    link.setAttribute('href', '../tools/');
+                });
             }
 
             const footerContainer = document.getElementById('footer-container');
