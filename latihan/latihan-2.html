@@ -1,109 +1,488 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Latihan 2 | Jurusan RPL</title>
-    <meta name="description" content="Latihan 2 RPL - segera hadir.">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://smkitalhidayah.sch.id/rpl/latihan/latihan-2.html">
-
+    <title>JS Practice - Petani Kode Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../assets/js/tailwind-config.js"></script>
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
         rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../assets/css/main.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .code-font {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        textarea::-webkit-scrollbar-track {
+            background: #1e1e1e;
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background: #4b5563;
+            border-radius: 4px;
+        }
+
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #6b7280;
+        }
+
+        /* Syntax highlighting simple colors */
+        .token-keyword {
+            color: #c678dd;
+        }
+
+        .token-string {
+            color: #98c379;
+        }
+
+        .token-function {
+            color: #61afef;
+        }
+    </style>
 </head>
 
-<body class="bg-dark text-slate-300 font-sans selection:bg-primary selection:text-white relative overflow-x-hidden">
-    <div class="fixed inset-0 pointer-events-none z-0">
-        <div class="absolute top-0 left-0 w-full h-full bg-grid"></div>
-        <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
-        <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px]"></div>
-    </div>
+<body class="bg-gray-100 text-gray-800 h-screen flex flex-col overflow-hidden">
 
-    <div id="navbar-container"></div>
+    <!-- Header -->
+    <header
+        class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center shadow-sm z-10 shrink-0">
+        <div class="flex items-center gap-3">
+            <div class="bg-yellow-500 p-2 rounded-lg text-white font-bold">JS</div>
+            <div>
+                <h1 class="text-xl font-bold text-gray-900">JS Practice</h1>
+                <p class="text-xs text-gray-500">Fungsi in JavaScript</p>
+            </div>
+        </div>
+        <div class="flex items-center gap-4">
+            <span id="progress-indicator"
+                class="text-sm font-semibold text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full">Soal 1 / 5</span>
+        </div>
+    </header>
 
-    <main class="relative z-10 pt-28 pb-20 px-6">
-        <section class="max-w-4xl mx-auto">
-            <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center">
-                <span
-                    class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-semibold">
-                    <i class="fa-solid fa-clock"></i>
-                    Segera Hadir
-                </span>
-                <h1 class="font-heading text-3xl md:text-4xl font-bold text-white mt-5">Latihan 2</h1>
-                <p class="text-slate-400 mt-4">Materi latihan ini sedang dipersiapkan. Sementara itu, kamu bisa lanjut latihan pertama dulu.</p>
-                <div class="mt-8 flex flex-wrap justify-center gap-3">
-                    <a href="index.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-sm font-semibold">Kembali ke daftar latihan</a>
-                    <a href="latihan-1.html" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-600 text-white text-sm font-semibold">Buka Latihan 1</a>
+    <!-- Main Workspace -->
+    <main id="workspace" class="flex-1 flex flex-col lg:flex-row overflow-hidden transition-opacity duration-300">
+
+        <!-- Left Panel: Instruction & Context -->
+        <section class="w-full lg:w-2/5 p-6 overflow-y-auto bg-white border-r border-gray-200 flex flex-col">
+            <div class="flex-1">
+                <div class="mb-6">
+                    <div class="flex justify-between items-start">
+                        <h2 id="task-title" class="text-2xl font-bold text-gray-900 mb-2">Loading...</h2>
+                        <span id="status-badge"
+                            class="hidden bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase">Belum
+                            Selesai</span>
+                    </div>
+
+                    <span id="task-topic"
+                        class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded uppercase tracking-wide font-semibold mb-4">Topic</span>
+                    <div id="task-desc" class="prose text-gray-600 text-sm leading-relaxed mb-6"></div>
+
+                    <div class="bg-blue-50 border-l-4 border-blue-500 p-4 mb-6">
+                        <h3 class="font-bold text-blue-800 text-sm mb-1">Tugas Kamu:</h3>
+                        <p id="task-goal" class="text-blue-700 text-sm"></p>
+                    </div>
+
+                    <div class="bg-gray-50 p-4 rounded-lg border border-gray-200">
+                        <h3 class="font-bold text-gray-700 text-xs uppercase mb-2">Expected Output:</h3>
+                        <code id="task-expected"
+                            class="code-font text-xs block bg-gray-200 p-2 rounded text-gray-700"></code>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="flex justify-between mt-6 pt-4 border-t border-gray-100 items-center">
+                <button onclick="prevQuestion()" id="btn-prev"
+                    class="px-4 py-2 text-gray-600 bg-gray-100 hover:bg-gray-200 rounded-lg text-sm font-medium transition disabled:opacity-50 disabled:cursor-not-allowed">
+                    &larr; Sebelumnya
+                </button>
+
+                <div class="flex gap-2">
+                    <button onclick="nextQuestion()" id="btn-next" disabled
+                        class="px-6 py-2 text-white bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:text-gray-500 disabled:cursor-not-allowed rounded-lg text-sm font-medium transition shadow-sm hover:shadow flex items-center gap-2">
+                        <span id="btn-next-text">Selanjutnya</span> &rarr;
+                    </button>
+                </div>
+            </div>
+            <p class="text-xs text-center text-gray-400 mt-2 italic">*Selesaikan soal untuk lanjut</p>
+        </section>
+
+        <!-- Right Panel: Editor & Console -->
+        <section class="w-full lg:w-3/5 flex flex-col h-full bg-[#1e1e1e]">
+
+            <!-- Toolbar -->
+            <div class="flex justify-between items-center px-4 py-2 bg-[#2d2d2d] border-b border-[#3e3e3e]">
+                <div class="text-gray-400 text-xs flex gap-2">
+                    <span class="flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-red-500"></span>
+                        main.js</span>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="resetCode()"
+                        class="px-3 py-1.5 text-xs text-gray-300 hover:text-white hover:bg-gray-700 rounded transition">
+                        Reset Soal Ini
+                    </button>
+                    <button onclick="runCode()"
+                        class="flex items-center gap-2 px-4 py-1.5 bg-green-600 hover:bg-green-500 text-white text-xs font-bold rounded transition shadow-lg shadow-green-900/20 hover:scale-105 active:scale-95">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
+                                clip-rule="evenodd" />
+                        </svg>
+                        RUN CODE
+                    </button>
+                </div>
+            </div>
+
+            <!-- Editor Area -->
+            <div class="flex-1 relative group">
+                <textarea id="editor"
+                    class="w-full h-full bg-[#1e1e1e] text-gray-300 code-font p-4 text-sm resize-none focus:outline-none leading-6"
+                    spellcheck="false" placeholder="// Tulis kodemu di sini..."></textarea>
+            </div>
+
+            <!-- Console Area -->
+            <div class="h-1/3 bg-[#181818] border-t border-[#3e3e3e] flex flex-col transition-all duration-200"
+                id="console-container">
+                <div
+                    class="px-4 py-1 bg-[#252526] text-gray-400 text-xs font-mono uppercase tracking-wider flex justify-between">
+                    <span>Console Output</span>
+                    <button onclick="clearConsole()" class="hover:text-white">Clear</button>
+                </div>
+                <div id="console-output" class="flex-1 p-4 overflow-y-auto code-font text-sm text-gray-300 space-y-1">
+                    <div class="text-gray-500 italic">Klik "Run Code" untuk melihat hasil...</div>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="footer-container"></div>
+    <!-- Result Screen (Hidden by default) -->
+    <main id="result-screen" class="hidden flex-1 flex-col overflow-y-auto bg-gray-50 p-8">
+        <div class="max-w-3xl mx-auto w-full">
+            <div class="text-center mb-10">
+                <div class="inline-block p-4 rounded-full bg-green-100 text-green-600 mb-4 text-4xl">🏆</div>
+                <h2 class="text-3xl font-bold text-gray-900 mb-2">Selamat! Semua Soal Selesai</h2>
+                <p class="text-gray-600">Kamu telah menyelesaikan latihan dasar fungsi JavaScript.</p>
+            </div>
 
-    <script src="../assets/js/main.js"></script>
+            <div class="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-gray-100 bg-gray-50">
+                    <h3 class="font-bold text-gray-700">Review Jawaban Kamu</h3>
+                </div>
+                <div id="answers-list" class="divide-y divide-gray-100">
+                    <!-- Answers injected here -->
+                </div>
+            </div>
+
+            <div class="text-center pb-10">
+                <button onclick="restartQuiz()"
+                    class="px-6 py-3 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition shadow-lg">
+                    Ulangi Latihan dari Awal
+                </button>
+            </div>
+        </div>
+    </main>
+
     <script>
-        async function loadSharedComponent(containerId, filePath) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
+        // --- DATA SOAL ---
+        const questions = [
+            {
+                id: 1,
+                topic: "Fungsi Dasar",
+                title: "Si Robot Penyapa",
+                desc: `Di JavaScript, fungsi adalah blok kode yang dirancang untuk melakukan tugas tertentu. Kita bisa membuatnya dengan kata kunci <code class="bg-gray-100 px-1 rounded">function</code>.<br><br>Bayangkan kamu sedang memprogram robot resepsionis. Robot ini harus bisa menyapa setiap tamu yang datang dengan ramah.`,
+                goal: "Buat fungsi bernama <code>sapaTamu</code>. Di dalamnya, lakukan <code>console.log</code> yang berisi teks 'Selamat datang, Silakan masuk!'. Lalu panggil fungsi tersebut.",
+                expected: "Selamat datang, Silakan masuk!",
+                starterCode: `// 1. Buat fungsi sapaTamu di sini\nfunction sapaTamu() {\n  // Tulis kodemu di sini\n  \n}\n\n// 2. Panggil fungsinya di bawah ini\n`,
+            },
+            {
+                id: 2,
+                topic: "Parameter & Argumen",
+                title: "Mesin Kopi Otomatis",
+                desc: `Fungsi menjadi lebih pintar jika kita memberinya input (parameter). <br><br>Kita sedang membuat software untuk mesin kopi. Mesin ini perlu tahu nama pelanggan untuk menulisnya di gelas.`,
+                goal: "Buat fungsi <code>buatKopi(nama)</code>. Fungsi ini harus mencetak: 'Kopi siap untuk [nama]'. Ganti [nama] dengan parameter yang diberikan. Panggil fungsi dengan nama 'Budi'.",
+                expected: "Kopi siap untuk Budi",
+                starterCode: `// Buat fungsi dengan parameter nama\nfunction buatKopi(nama) {\n  console.log("Kopi siap untuk " + nama);\n}\n\n// Panggil fungsi untuk pelanggan bernama 'Budi'\n// ... tulis kodemu ...\n`,
+            },
+            {
+                id: 3,
+                topic: "Return Value",
+                title: "Kalkulator Diskon Toko",
+                desc: `Fungsi tidak hanya menampilkan teks, tapi seringkali <b>mengembalikan nilai</b> (return) untuk diolah lagi.<br><br>Toko sedang diskon. Kita butuh fungsi yang menerima harga asli, lalu mengembalikan harga setelah dikurangi diskon 1000 rupiah.`,
+                goal: "Buat fungsi <code>potongHarga(harga)</code>. Di dalamnya, return <code>harga - 1000</code>. Lalu, buat variabel <code>hargaAkhir</code> yang menampung hasil pemanggilan fungsi dengan harga 5000. Cetak <code>hargaAkhir</code>.",
+                expected: "4000",
+                starterCode: `function potongHarga(harga) {\n  // Gunakan keyword 'return'\n  return harga - 1000;\n}\n\n// Panggil fungsi, simpan di variabel, lalu console.log hasilnya\nlet hargaAsli = 5000;\nlet hargaAkhir = ...; // panggil fungsi di sini\n\nconsole.log(hargaAkhir);`,
+            },
+            {
+                id: 4,
+                topic: "Scope (Cakupan Variabel)",
+                title: "Misteri Variabel Hilang",
+                desc: `Ingat materi Petani Kode tentang Scope? Variabel yang dibuat di dalam fungsi (Lokal) tidak bisa diakses dari luar (Global).<br><br>Kode di samping error karena mencoba mengakses variabel lokal dari luar.`,
+                goal: "Perbaiki kode tersebut agar tidak error. Pindahkan <code>console.log(pesanRahasia)</code> ke DALAM fungsi, atau pindahkan variabel <code>pesanRahasia</code> menjadi global.",
+                expected: "Kode Rahasia: 12345",
+                starterCode: `function bukaBrankas() {\n  let pesanRahasia = "Kode Rahasia: 12345";\n  // Pindahkan console.log ke baris ini agar bisa baca variabel\n}\n\nbukaBrankas();\n// Baris di bawah ini error karena 'pesanRahasia' tidak dikenal di luar\nconsole.log(pesanRahasia); `,
+            },
+            {
+                id: 5,
+                topic: "Arrow Function (ES6)",
+                title: "Upgrade ke Teknologi Modern",
+                desc: `JavaScript modern (ES6) memperkenalkan <b>Arrow Function</b> yang lebih ringkas. Tandanya pakai panah <code>=></code>.<br><br>Contoh: <br><code>const sapa = (nama) => { ... }</code>`,
+                goal: "Ubah fungsi biasa di samping menjadi Arrow Function. Pastikan outputnya tetap menghitung luas persegi (sisi x sisi).",
+                expected: "25",
+                starterCode: `// Ubah fungsi ini menjadi Arrow Function\n// const hitungLuas = (sisi) => { ... }\n\nfunction hitungLuas(sisi) {\n  return sisi * sisi;\n}\n\nconsole.log(hitungLuas(5));`,
+            }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let currentQuestionIndex = 0;
+        let userAnswers = new Array(questions.length).fill("");
+        let isSolved = new Array(questions.length).fill(false);
+
+        // Elements
+        const elWorkspace = document.getElementById('workspace');
+        const elResultScreen = document.getElementById('result-screen');
+        const elTitle = document.getElementById('task-title');
+        const elTopic = document.getElementById('task-topic');
+        const elDesc = document.getElementById('task-desc');
+        const elGoal = document.getElementById('task-goal');
+        const elExpected = document.getElementById('task-expected');
+        const elEditor = document.getElementById('editor');
+        const elOutput = document.getElementById('console-output');
+        const elProgress = document.getElementById('progress-indicator');
+        const elStatusBadge = document.getElementById('status-badge');
+        const btnNext = document.getElementById('btn-next');
+        const btnNextText = document.getElementById('btn-next-text');
+        const btnPrev = document.getElementById('btn-prev');
+
+        // Initial Load
+        loadQuestion(0);
+
+        function loadQuestion(index) {
+            currentQuestionIndex = index;
+            const q = questions[index];
+
+            // Render UI Content
+            elTitle.textContent = q.title;
+            elTopic.textContent = q.topic;
+            elDesc.innerHTML = q.desc;
+            elGoal.innerHTML = q.goal;
+            elExpected.textContent = q.expected;
+            elProgress.textContent = `Soal ${index + 1} / ${questions.length}`;
+
+            // Render Editor Content
+            // If user has visited/typed before, load their answer. Else load starter code.
+            if (userAnswers[index]) {
+                elEditor.value = userAnswers[index];
+            } else {
+                elEditor.value = q.starterCode;
+                // Save starter code to state immediately so navigating away doesn't clear it
+                userAnswers[index] = q.starterCode;
+            }
+
+            // Button Logic
+            btnPrev.disabled = index === 0;
+
+            // Check if locked or unlocked
+            if (isSolved[index]) {
+                unlockNextButton();
+                elStatusBadge.textContent = "✅ Selesai";
+                elStatusBadge.className = "bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-bold uppercase block";
+            } else {
+                lockNextButton();
+                elStatusBadge.textContent = "🔒 Belum Selesai";
+                elStatusBadge.className = "bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase block";
+            }
+            elStatusBadge.classList.remove('hidden');
+
+            // Text change for last question
+            if (index === questions.length - 1) {
+                btnNextText.textContent = "Lihat Hasil Akhir";
+            } else {
+                btnNextText.textContent = "Selanjutnya";
+            }
+
+            clearConsole();
+        }
+
+        function saveCurrentWork() {
+            userAnswers[currentQuestionIndex] = elEditor.value;
+        }
+
+        function nextQuestion() {
+            saveCurrentWork(); // Save before moving
+
+            if (currentQuestionIndex < questions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            } else {
+                showResults();
+            }
+        }
+
+        function prevQuestion() {
+            saveCurrentWork(); // Save before moving
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        }
+
+        function resetCode() {
+            const q = questions[currentQuestionIndex];
+            elEditor.value = q.starterCode;
+            userAnswers[currentQuestionIndex] = q.starterCode; // Reset state too
+            isSolved[currentQuestionIndex] = false; // Reset solved status
+            lockNextButton();
+            elStatusBadge.textContent = "🔒 Belum Selesai";
+            elStatusBadge.className = "bg-gray-200 text-gray-600 text-xs px-2 py-1 rounded font-bold uppercase block";
+            clearConsole();
+        }
+
+        function lockNextButton() {
+            btnNext.disabled = true;
+            btnNext.classList.add('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+            btnNext.classList.remove('bg-indigo-600', 'hover:bg-indigo-700', 'shadow-sm', 'text-white');
+        }
+
+        function unlockNextButton() {
+            btnNext.disabled = false;
+            btnNext.classList.remove('bg-gray-300', 'text-gray-500', 'cursor-not-allowed');
+            btnNext.classList.add('bg-indigo-600', 'hover:bg-indigo-700', 'shadow-sm', 'text-white');
+        }
+
+        function clearConsole() {
+            elOutput.innerHTML = '<div class="text-gray-500 italic">Klik "Run Code" untuk melihat hasil...</div>';
+        }
+
+        // --- THE ENGINE ---
+        function runCode() {
+            saveCurrentWork(); // Auto-save when running
+            const userCode = elEditor.value;
+            elOutput.innerHTML = '';
+
+            const originalLog = console.log;
+            const logs = [];
+
+            console.log = function (...args) {
+                logs.push(args.join(' '));
+                originalLog.apply(console, args);
+            };
+
             try {
-                const response = await fetch(filePath);
-                if (!response.ok) throw new Error(`Failed to load ${filePath}`);
-                container.innerHTML = await response.text();
-            } catch (error) {
-                console.error(error);
-            }
-        }
+                // Execute
+                new Function(userCode)();
 
-        function normalizeSubpageLinks() {
-            const navbarContainer = document.getElementById('navbar-container');
-            if (navbarContainer) {
-                const homeHashMap = {
-                    '#': '../index.html',
-                    '#about': '../index.html#about',
-                    '#stack': '../index.html#stack',
-                    '#prospek': '../index.html#prospek',
-                    '#siswa': '../index.html#siswa'
-                };
-
-                Object.entries(homeHashMap).forEach(([from, to]) => {
-                    navbarContainer.querySelectorAll(`a[href="${from}"]`).forEach((link) => {
-                        link.setAttribute('href', to);
+                if (logs.length === 0) {
+                    elOutput.innerHTML += `<div class="text-yellow-500 font-mono text-xs mb-2">⚠️ Kode berjalan, tapi tidak ada output (console.log).</div>`;
+                } else {
+                    logs.forEach(log => {
+                        elOutput.innerHTML += `<div class="font-mono border-b border-gray-700 pb-1 mb-1 text-green-400">➜ ${log}</div>`;
                     });
-                });
 
-                navbarContainer.querySelectorAll('a[href="latihan/"], a[href="latihan/latihan-1.html"], a[href="latihan.html"]').forEach((link) => {
-                    link.setAttribute('href', 'index.html');
-                });
+                    // Validate
+                    checkAnswer(logs);
+                }
 
-                navbarContainer.querySelectorAll('a[href="tools/"], a[href="tools/index.html"]').forEach((link) => {
-                    link.setAttribute('href', '../tools/');
-                });
-            }
-
-            const footerContainer = document.getElementById('footer-container');
-            if (footerContainer) {
-                const footerLogo = footerContainer.querySelector('a[href="#"]');
-                if (footerLogo) footerLogo.setAttribute('href', '../index.html');
+            } catch (error) {
+                elOutput.innerHTML += `<div class="text-red-400 font-mono bg-red-900/20 p-2 rounded border border-red-800">❌ Error: ${error.message}</div>`;
+            } finally {
+                console.log = originalLog;
             }
         }
 
-        document.addEventListener('DOMContentLoaded', async () => {
-            await Promise.all([
-                loadSharedComponent('navbar-container', '../components/sections/navbar.html'),
-                loadSharedComponent('footer-container', '../components/sections/footer.html')
-            ]);
+        function checkAnswer(logs) {
+            const currentQ = questions[currentQuestionIndex];
+            const combinedLog = logs.join(' ');
+            let isCorrect = false;
 
-            normalizeSubpageLinks();
-            document.dispatchEvent(new CustomEvent('components:loaded'));
-        });
+            // Logic Validation
+            if (combinedLog.includes(currentQ.expected)) {
+                isCorrect = true;
+            } else if (currentQ.id === 3 && combinedLog.includes("4000")) {
+                isCorrect = true;
+            } else if (currentQ.id === 5 && combinedLog.includes("25")) {
+                if (elEditor.value.includes("=>")) {
+                    isCorrect = true;
+                } else {
+                    elOutput.innerHTML += `<div class="mt-4 p-2 bg-yellow-900/30 text-yellow-200 text-xs rounded border border-yellow-700">💡 Output benar, tapi kamu belum menggunakan Arrow Function (=>).</div>`;
+                    return;
+                }
+            }
+
+            if (isCorrect) {
+                // Mark as solved
+                isSolved[currentQuestionIndex] = true;
+
+                // Update UI
+                elOutput.innerHTML += `<div class="mt-4 p-3 bg-green-900/30 text-green-200 text-sm font-bold rounded border border-green-700 flex flex-col gap-1 animate-pulse">
+                    <span class="flex items-center gap-2">✅ Jawaban Benar!</span>
+                    <span class="text-xs font-normal text-green-400">Tombol "Selanjutnya" sudah terbuka.</span>
+                </div>`;
+
+                unlockNextButton();
+                elStatusBadge.textContent = "✅ Selesai";
+                elStatusBadge.className = "bg-green-100 text-green-700 text-xs px-2 py-1 rounded font-bold uppercase block";
+            } else {
+                elOutput.innerHTML += `<div class="mt-4 p-2 bg-red-900/20 text-red-300 text-xs rounded border border-red-800">
+                    ❌ Output belum sesuai harapan. <br>Expected: "${currentQ.expected}"
+                </div>`;
+            }
+        }
+
+        // --- RESULT PAGE LOGIC ---
+        function showResults() {
+            elWorkspace.classList.add('hidden');
+            elResultScreen.classList.remove('hidden');
+            elResultScreen.classList.add('flex');
+
+            const answersList = document.getElementById('answers-list');
+            answersList.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const answer = userAnswers[idx];
+                const html = `
+                    <div class="p-6">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-bold text-gray-800">Soal ${idx + 1}: ${q.title}</h4>
+                            <span class="text-xs font-mono bg-gray-100 px-2 py-1 rounded text-gray-600">${q.topic}</span>
+                        </div>
+                        <div class="bg-gray-800 rounded-lg p-4 overflow-x-auto">
+                            <pre class="code-font text-sm text-gray-300">${escapeHtml(answer)}</pre>
+                        </div>
+                    </div>
+                `;
+                answersList.innerHTML += html;
+            });
+        }
+
+        function restartQuiz() {
+            // Reset everything
+            currentQuestionIndex = 0;
+            userAnswers = new Array(questions.length).fill("");
+            isSolved = new Array(questions.length).fill(false);
+
+            elResultScreen.classList.add('hidden');
+            elResultScreen.classList.remove('flex');
+            elWorkspace.classList.remove('hidden');
+
+            loadQuestion(0);
+        }
+
+        // Utility to prevent HTML injection in code display
+        function escapeHtml(text) {
+            return text
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
     </script>
 </body>
 

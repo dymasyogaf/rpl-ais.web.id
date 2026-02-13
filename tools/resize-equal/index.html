@@ -1,0 +1,692 @@
+<!doctype html>
+<html lang="id" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Samakan Ukuran Foto | RPL Tools</title>
+    <meta
+      name="description"
+      content="Samakan ukuran banyak foto sekaligus langsung dari browser."
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="../../assets/js/tailwind-config.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../../assets/css/main.css" />
+    <link rel="stylesheet" href="../../assets/css/components.css" />
+  </head>
+
+  <body
+    class="bg-dark text-slate-300 font-sans selection:bg-primary selection:text-white relative overflow-x-hidden min-h-screen"
+  >
+    <div class="fixed inset-0 pointer-events-none z-0">
+      <div class="absolute top-0 left-0 w-full h-full bg-grid"></div>
+      <div class="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-[120px]"></div>
+      <div
+        class="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px]"
+      ></div>
+    </div>
+
+    <header class="relative z-10 border-b border-white/10 backdrop-blur-md">
+      <div class="max-w-6xl mx-auto px-6 h-20 flex items-center justify-between">
+        <a href="../" class="font-heading font-bold text-2xl text-white flex items-center gap-2">
+          <div
+            class="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20"
+          >
+            <i class="fa-solid fa-crop-simple text-white text-sm"></i>
+          </div>
+          Samakan<span class="text-primary">Ukuran</span>
+        </a>
+        <a
+          href="../"
+          class="inline-flex items-center gap-2 text-sm font-medium text-slate-300 hover:text-white transition-colors"
+        >
+          <i class="fa-solid fa-arrow-left"></i>
+          Kembali ke Tools
+        </a>
+      </div>
+    </header>
+
+    <main class="relative z-10 max-w-6xl mx-auto px-6 py-10">
+      <section class="mb-8">
+        <p class="text-xs uppercase tracking-[0.18em] text-cyan-300 font-semibold">RPL Tool</p>
+        <h1 class="font-heading text-3xl md:text-4xl font-extrabold text-white mt-2">
+          Samakan Ukuran Foto
+        </h1>
+        <p class="text-slate-400 mt-3 max-w-2xl">
+          Upload banyak foto, tentukan ukuran target yang sama, pilih mode skala, lalu download
+          hasilnya satu per satu atau sekaligus.
+        </p>
+      </section>
+
+      <section class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <aside class="lg:col-span-2 glass-card rounded-2xl border border-white/10 p-6 h-fit">
+          <label
+            class="w-full h-36 rounded-xl border-2 border-dashed border-slate-600 hover:border-cyan-400/70 transition flex flex-col items-center justify-center cursor-pointer text-center px-4"
+          >
+            <input id="file-input" type="file" accept="image/*" multiple class="hidden" />
+            <i class="fa-solid fa-images text-cyan-300 text-xl mb-2"></i>
+            <span class="text-white font-semibold">Upload Foto</span>
+            <span id="file-summary" class="text-xs text-slate-400 mt-1">Belum ada file dipilih</span>
+          </label>
+
+          <div class="mt-6 space-y-5">
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label
+                  for="target-width"
+                  class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Lebar (px)</label
+                >
+                <input
+                  id="target-width"
+                  type="number"
+                  min="1"
+                  value="1080"
+                  class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                />
+              </div>
+              <div>
+                <label
+                  for="target-height"
+                  class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Tinggi (px)</label
+                >
+                <input
+                  id="target-height"
+                  type="number"
+                  min="1"
+                  value="1080"
+                  class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                />
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-4">
+              <div>
+                <label for="fit-mode" class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Mode Skala</label
+                >
+                <select
+                  id="fit-mode"
+                  class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                >
+                  <option value="cover">Cover (penuh, bisa terpotong)</option>
+                  <option value="contain">Contain (utuh, bisa ada padding)</option>
+                  <option value="stretch">Stretch (paksa pas)</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="download-format"
+                  class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Format Output</label
+                >
+                <select
+                  id="download-format"
+                  class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                >
+                  <option value="jpeg">JPG (umum)</option>
+                  <option value="webp">WEBP (ringan)</option>
+                  <option value="png">PNG (lossless)</option>
+                </select>
+              </div>
+
+              <div>
+                <label
+                  for="background-color"
+                  class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Warna Padding</label
+                >
+                <div class="flex items-center gap-2">
+                  <input
+                    id="background-color"
+                    type="color"
+                    value="#ffffff"
+                    class="h-10 w-14 rounded-md bg-transparent border border-white/10 cursor-pointer"
+                  />
+                  <input
+                    id="background-hex"
+                    type="text"
+                    value="#ffffff"
+                    maxlength="7"
+                    class="flex-1 rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 uppercase tracking-wide focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                  />
+                </div>
+                <p class="text-[11px] text-slate-500 mt-1">
+                  Dipakai saat mode Contain atau saat export JPG.
+                </p>
+              </div>
+
+              <div id="quality-wrap">
+                <div class="flex justify-between text-xs text-slate-400 mb-1">
+                  <span>Kualitas Output</span>
+                  <span id="quality-value">90</span>
+                </div>
+                <input
+                  id="quality"
+                  type="range"
+                  min="10"
+                  max="100"
+                  step="5"
+                  value="90"
+                  class="w-full accent-cyan-400"
+                />
+                <p id="quality-note" class="text-[11px] text-slate-500 mt-1">
+                  Berlaku untuk JPG/WEBP.
+                </p>
+              </div>
+            </div>
+
+            <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-2">
+              <p class="text-xs uppercase tracking-wide text-slate-400">Indikator File Preview</p>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Asli</span>
+                <span id="original-size" class="text-slate-200 font-medium">-</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Estimasi Hasil</span>
+                <span id="output-size" class="text-slate-200 font-medium">-</span>
+              </div>
+              <div class="flex items-center justify-between text-sm">
+                <span class="text-slate-400">Perubahan</span>
+                <span id="size-change" class="text-cyan-300 font-semibold">-</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <button
+                id="reset-btn"
+                class="px-4 py-2 rounded-lg border border-red-400/40 text-red-300 hover:bg-red-500/10 transition text-sm font-semibold"
+              >
+                Reset
+              </button>
+              <button
+                id="download-selected-btn"
+                class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:brightness-110 transition text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+                disabled
+              >
+                Download Preview
+              </button>
+            </div>
+
+            <button
+              id="download-all-btn"
+              class="w-full px-4 py-2 rounded-lg border border-cyan-400/35 text-cyan-200 hover:bg-cyan-500/10 transition text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+              disabled
+            >
+              Download Semua
+            </button>
+          </div>
+        </aside>
+
+        <section class="lg:col-span-3 glass-card rounded-2xl border border-white/10 p-5">
+          <div class="mb-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+            <div>
+              <label
+                for="preview-file"
+                class="text-xs uppercase tracking-wide text-slate-400 block mb-1"
+                >File Preview</label
+              >
+              <select
+                id="preview-file"
+                class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                disabled
+              ></select>
+            </div>
+            <div class="text-xs text-slate-400 flex items-end">
+              Tip: browser bisa meminta izin saat tombol "Download Semua" ditekan.
+            </div>
+          </div>
+          <div
+            class="checkerboard rounded-xl border border-white/10 min-h-[280px] md:min-h-[460px] grid place-items-center"
+          >
+            <canvas
+              id="preview-canvas"
+              class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
+            ></canvas>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script>
+      const fileInput = document.getElementById("file-input");
+      const fileSummary = document.getElementById("file-summary");
+      const targetWidthInput = document.getElementById("target-width");
+      const targetHeightInput = document.getElementById("target-height");
+      const fitModeSelect = document.getElementById("fit-mode");
+      const formatSelect = document.getElementById("download-format");
+      const backgroundColorInput = document.getElementById("background-color");
+      const backgroundHexInput = document.getElementById("background-hex");
+      const qualityInput = document.getElementById("quality");
+      const qualityValue = document.getElementById("quality-value");
+      const qualityWrap = document.getElementById("quality-wrap");
+      const qualityNote = document.getElementById("quality-note");
+      const originalSizeText = document.getElementById("original-size");
+      const outputSizeText = document.getElementById("output-size");
+      const sizeChangeText = document.getElementById("size-change");
+      const resetBtn = document.getElementById("reset-btn");
+      const downloadSelectedBtn = document.getElementById("download-selected-btn");
+      const downloadAllBtn = document.getElementById("download-all-btn");
+      const previewFileSelect = document.getElementById("preview-file");
+      const canvas = document.getElementById("preview-canvas");
+      const ctx = canvas.getContext("2d");
+
+      let files = [];
+      let selectedIndex = -1;
+      let latestOutputBlob = null;
+      let exportRequestId = 0;
+
+      function formatBytes(bytes) {
+        if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
+        const units = ["B", "KB", "MB", "GB"];
+        let value = bytes;
+        let idx = 0;
+        while (value >= 1024 && idx < units.length - 1) {
+          value /= 1024;
+          idx += 1;
+        }
+        const precision = value >= 100 || idx === 0 ? 0 : 2;
+        return `${value.toFixed(precision)} ${units[idx]}`;
+      }
+
+      function getFormatMeta(format) {
+        if (format === "jpeg") return { mime: "image/jpeg", extension: "jpg" };
+        if (format === "webp") return { mime: "image/webp", extension: "webp" };
+        return { mime: "image/png", extension: "png" };
+      }
+
+      function isLossyFormat(format) {
+        return format === "jpeg" || format === "webp";
+      }
+
+      function sanitizeHex(value) {
+        const normalized = (value || "").trim().toLowerCase();
+        if (/^#[0-9a-f]{6}$/.test(normalized)) {
+          return normalized;
+        }
+        return "#ffffff";
+      }
+
+      function updateQualityVisibility() {
+        const lossy = isLossyFormat(formatSelect.value);
+        qualityInput.disabled = !lossy;
+        qualityWrap.classList.toggle("opacity-60", !lossy);
+        qualityNote.textContent = lossy
+          ? "Berlaku untuk JPG/WEBP."
+          : "PNG lossless, kualitas tidak dipakai.";
+      }
+
+      function resetSizeIndicators() {
+        originalSizeText.textContent = "-";
+        outputSizeText.textContent = "-";
+        sizeChangeText.textContent = "-";
+        sizeChangeText.style.color = "";
+      }
+
+      function updateSizeIndicators(originalSize, outputSize) {
+        originalSizeText.textContent = originalSize ? formatBytes(originalSize) : "-";
+        outputSizeText.textContent = outputSize ? formatBytes(outputSize) : "-";
+
+        if (!originalSize || !outputSize) {
+          sizeChangeText.textContent = "-";
+          sizeChangeText.style.color = "";
+          return;
+        }
+
+        const diff = outputSize - originalSize;
+        const percent = (Math.abs(diff) / originalSize) * 100;
+
+        if (diff <= 0) {
+          sizeChangeText.style.color = "#86efac";
+          sizeChangeText.textContent = `Lebih kecil ${percent.toFixed(1)}%`;
+        } else {
+          sizeChangeText.style.color = "#fca5a5";
+          sizeChangeText.textContent = `Lebih besar ${percent.toFixed(1)}%`;
+        }
+      }
+
+      function canvasToBlob(type, quality) {
+        return new Promise((resolve) => {
+          canvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob);
+                return;
+              }
+
+              const dataUrl = canvas.toDataURL(type, quality);
+              const [header, base64] = dataUrl.split(",");
+              const mime =
+                (header.match(/data:(.*?);base64/) || [])[1] || "application/octet-stream";
+              const binary = atob(base64 || "");
+              const bytes = new Uint8Array(binary.length);
+              for (let i = 0; i < binary.length; i += 1) {
+                bytes[i] = binary.charCodeAt(i);
+              }
+              resolve(new Blob([bytes], { type: mime }));
+            },
+            type,
+            quality,
+          );
+        });
+      }
+
+      function loadImageFromFile(file) {
+        return new Promise((resolve, reject) => {
+          const url = URL.createObjectURL(file);
+          const img = new Image();
+          img.onload = () => {
+            URL.revokeObjectURL(url);
+            resolve(img);
+          };
+          img.onerror = () => {
+            URL.revokeObjectURL(url);
+            reject(new Error(`Gagal membaca gambar: ${file.name}`));
+          };
+          img.src = url;
+        });
+      }
+
+      function drawWithMode(img, width, height, mode, fillColor) {
+        canvas.width = width;
+        canvas.height = height;
+        ctx.clearRect(0, 0, width, height);
+
+        if (mode === "contain") {
+          ctx.fillStyle = fillColor;
+          ctx.fillRect(0, 0, width, height);
+          const scale = Math.min(width / img.width, height / img.height);
+          const drawWidth = Math.max(1, Math.round(img.width * scale));
+          const drawHeight = Math.max(1, Math.round(img.height * scale));
+          const offsetX = Math.round((width - drawWidth) / 2);
+          const offsetY = Math.round((height - drawHeight) / 2);
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+          return;
+        }
+
+        if (mode === "stretch") {
+          ctx.drawImage(img, 0, 0, width, height);
+          return;
+        }
+
+        const scale = Math.max(width / img.width, height / img.height);
+        const drawWidth = Math.max(1, Math.round(img.width * scale));
+        const drawHeight = Math.max(1, Math.round(img.height * scale));
+        const offsetX = Math.round((width - drawWidth) / 2);
+        const offsetY = Math.round((height - drawHeight) / 2);
+        ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+      }
+
+      function getTargetDimensions() {
+        const width = Math.max(1, Number(targetWidthInput.value) || 1);
+        const height = Math.max(1, Number(targetHeightInput.value) || 1);
+        targetWidthInput.value = String(width);
+        targetHeightInput.value = String(height);
+        return { width, height };
+      }
+
+      async function renderFileToBlob(file) {
+        const format = formatSelect.value;
+        const { mime } = getFormatMeta(format);
+        const quality = Number(qualityInput.value) / 100;
+        const mode = fitModeSelect.value;
+        const bgHex = sanitizeHex(backgroundHexInput.value);
+        const { width, height } = getTargetDimensions();
+        const img = await loadImageFromFile(file);
+
+        const shouldFillBackground = mode === "contain" || format === "jpeg";
+        const fillColor = shouldFillBackground ? bgHex : "transparent";
+        drawWithMode(img, width, height, mode, fillColor);
+
+        if (format !== "jpeg") {
+          return canvasToBlob(mime, quality);
+        }
+
+        const tempCanvas = document.createElement("canvas");
+        tempCanvas.width = canvas.width;
+        tempCanvas.height = canvas.height;
+        const tempCtx = tempCanvas.getContext("2d");
+        tempCtx.fillStyle = bgHex;
+        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
+        tempCtx.drawImage(canvas, 0, 0);
+
+        return new Promise((resolve) => {
+          tempCanvas.toBlob(
+            (blob) => {
+              if (blob) {
+                resolve(blob);
+                return;
+              }
+              const dataUrl = tempCanvas.toDataURL(mime, quality);
+              const [header, base64] = dataUrl.split(",");
+              const detectedMime = (header.match(/data:(.*?);base64/) || [])[1] || mime;
+              const binary = atob(base64 || "");
+              const bytes = new Uint8Array(binary.length);
+              for (let i = 0; i < binary.length; i += 1) {
+                bytes[i] = binary.charCodeAt(i);
+              }
+              resolve(new Blob([bytes], { type: detectedMime }));
+            },
+            mime,
+            quality,
+          );
+        });
+      }
+
+      function updateFileSelector() {
+        previewFileSelect.innerHTML = "";
+        if (!files.length) {
+          previewFileSelect.disabled = true;
+          const option = document.createElement("option");
+          option.textContent = "Pilih file dulu";
+          option.value = "";
+          previewFileSelect.append(option);
+          return;
+        }
+
+        files.forEach((file, index) => {
+          const option = document.createElement("option");
+          option.value = String(index);
+          option.textContent = `${index + 1}. ${file.name}`;
+          previewFileSelect.append(option);
+        });
+        previewFileSelect.disabled = false;
+        previewFileSelect.value = String(selectedIndex);
+      }
+
+      function updateButtons() {
+        const hasFiles = files.length > 0;
+        downloadSelectedBtn.disabled = !hasFiles || !latestOutputBlob;
+        downloadAllBtn.disabled = !hasFiles;
+      }
+
+      async function refreshPreview() {
+        if (!files.length || selectedIndex < 0 || selectedIndex >= files.length) {
+          latestOutputBlob = null;
+          canvas.width = 0;
+          canvas.height = 0;
+          resetSizeIndicators();
+          updateButtons();
+          return;
+        }
+
+        const selectedFile = files[selectedIndex];
+        const requestId = ++exportRequestId;
+        try {
+          const blob = await renderFileToBlob(selectedFile);
+          if (requestId !== exportRequestId) return;
+          latestOutputBlob = blob;
+          updateSizeIndicators(selectedFile.size, blob ? blob.size : 0);
+        } catch (error) {
+          console.error(error);
+          latestOutputBlob = null;
+          resetSizeIndicators();
+        }
+        updateButtons();
+      }
+
+      function setFiles(fileList) {
+        files = Array.from(fileList || []);
+        selectedIndex = files.length ? 0 : -1;
+        fileSummary.textContent = files.length
+          ? `${files.length} file dipilih`
+          : "Belum ada file dipilih";
+        updateFileSelector();
+        refreshPreview();
+      }
+
+      function syncColorInputs(fromColorPicker) {
+        if (fromColorPicker) {
+          backgroundHexInput.value = backgroundColorInput.value.toUpperCase();
+          return;
+        }
+        const sanitized = sanitizeHex(backgroundHexInput.value);
+        backgroundHexInput.value = sanitized.toUpperCase();
+        backgroundColorInput.value = sanitized;
+      }
+
+      function resetState() {
+        files = [];
+        selectedIndex = -1;
+        latestOutputBlob = null;
+        exportRequestId += 1;
+        fileInput.value = "";
+        fileSummary.textContent = "Belum ada file dipilih";
+        targetWidthInput.value = "1080";
+        targetHeightInput.value = "1080";
+        fitModeSelect.value = "cover";
+        formatSelect.value = "jpeg";
+        backgroundColorInput.value = "#ffffff";
+        backgroundHexInput.value = "#FFFFFF";
+        qualityInput.value = "90";
+        qualityValue.textContent = "90";
+        canvas.width = 0;
+        canvas.height = 0;
+        updateFileSelector();
+        resetSizeIndicators();
+        updateQualityVisibility();
+        updateButtons();
+      }
+
+      function getDownloadName(fileName, extension) {
+        const baseName = fileName.replace(/\.[^.]+$/, "");
+        const { width, height } = getTargetDimensions();
+        return `${baseName}-${width}x${height}.${extension}`;
+      }
+
+      async function downloadSelected() {
+        if (!files.length || selectedIndex < 0 || selectedIndex >= files.length) return;
+        if (!latestOutputBlob) {
+          await refreshPreview();
+        }
+        if (!latestOutputBlob) return;
+
+        const { extension } = getFormatMeta(formatSelect.value);
+        const selectedFile = files[selectedIndex];
+        const url = URL.createObjectURL(latestOutputBlob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = getDownloadName(selectedFile.name, extension);
+        link.click();
+        URL.revokeObjectURL(url);
+      }
+
+      async function downloadAll() {
+        if (!files.length) return;
+        downloadAllBtn.disabled = true;
+        downloadAllBtn.textContent = "Memproses...";
+        const { extension } = getFormatMeta(formatSelect.value);
+
+        for (const file of files) {
+          try {
+            const blob = await renderFileToBlob(file);
+            if (!blob) continue;
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = getDownloadName(file.name, extension);
+            link.click();
+            URL.revokeObjectURL(url);
+            await new Promise((resolve) => {
+              setTimeout(resolve, 140);
+            });
+          } catch (error) {
+            console.error(error);
+          }
+        }
+
+        downloadAllBtn.textContent = "Download Semua";
+        updateButtons();
+        refreshPreview();
+      }
+
+      fileInput.addEventListener("change", (event) => {
+        const selectedFiles = event.target.files || [];
+        setFiles(selectedFiles);
+      });
+      previewFileSelect.addEventListener("change", () => {
+        selectedIndex = Number(previewFileSelect.value);
+        refreshPreview();
+      });
+
+      [targetWidthInput, targetHeightInput, fitModeSelect, formatSelect].forEach((input) => {
+        input.addEventListener("input", refreshPreview);
+      });
+
+      formatSelect.addEventListener("change", () => {
+        updateQualityVisibility();
+        refreshPreview();
+      });
+
+      qualityInput.addEventListener("input", () => {
+        qualityValue.textContent = qualityInput.value;
+        if (isLossyFormat(formatSelect.value)) {
+          refreshPreview();
+        }
+      });
+
+      backgroundColorInput.addEventListener("input", () => {
+        syncColorInputs(true);
+        refreshPreview();
+      });
+
+      backgroundHexInput.addEventListener("change", () => {
+        syncColorInputs(false);
+        refreshPreview();
+      });
+
+      downloadSelectedBtn.addEventListener("click", downloadSelected);
+      downloadAllBtn.addEventListener("click", downloadAll);
+      resetBtn.addEventListener("click", resetState);
+
+      resetState();
+    </script>
+
+    <style>
+      .checkerboard {
+        background-image:
+          linear-gradient(45deg, rgba(148, 163, 184, 0.22) 25%, transparent 25%),
+          linear-gradient(-45deg, rgba(148, 163, 184, 0.22) 25%, transparent 25%),
+          linear-gradient(45deg, transparent 75%, rgba(148, 163, 184, 0.22) 75%),
+          linear-gradient(-45deg, transparent 75%, rgba(148, 163, 184, 0.22) 75%);
+        background-size: 24px 24px;
+        background-position:
+          0 0,
+          0 12px,
+          12px -12px,
+          -12px 0;
+        background-color: #0f172a;
+      }
+    </style>
+  </body>
+</html>
