@@ -26,10 +26,13 @@
         <div class="absolute bottom-20 right-1/4 w-96 h-96 bg-blue-600/5 rounded-full blur-[120px]"></div>
     </div>
 
-    <div id="navbar-container"></div>
-
-    <main class="relative z-10 pt-28 pb-20 px-6">
+    <main class="relative z-10 pt-16 pb-20 px-6">
         <section class="max-w-4xl mx-auto">
+            <a href="index.html"
+                class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-sm font-semibold mb-5">
+                <i class="fa-solid fa-arrow-left"></i>
+                Kembali ke daftar latihan
+            </a>
             <div class="rounded-3xl border border-white/10 bg-white/[0.03] p-8 md:p-10 text-center">
                 <span
                     class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/20 text-blue-300 border border-blue-400/30 text-xs font-semibold">
@@ -39,72 +42,13 @@
                 <h1 class="font-heading text-3xl md:text-4xl font-bold text-white mt-5">Latihan 3</h1>
                 <p class="text-slate-400 mt-4">Halaman latihan ini juga sedang dipersiapkan. Nanti kamu tinggal pilih dari daftar latihan.</p>
                 <div class="mt-8 flex flex-wrap justify-center gap-3">
-                    <a href="index.html" class="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/10 text-white text-sm font-semibold">Kembali ke daftar latihan</a>
                     <a href="latihan-1.html" class="px-5 py-2.5 rounded-xl bg-primary hover:bg-primary-600 text-white text-sm font-semibold">Buka Latihan 1</a>
                 </div>
             </div>
         </section>
     </main>
 
-    <div id="footer-container"></div>
-
     <script src="../assets/js/main.js"></script>
-    <script>
-        async function loadSharedComponent(containerId, filePath) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            try {
-                const response = await fetch(filePath);
-                if (!response.ok) throw new Error(`Failed to load ${filePath}`);
-                container.innerHTML = await response.text();
-            } catch (error) {
-                console.error(error);
-            }
-        }
-
-        function normalizeSubpageLinks() {
-            const navbarContainer = document.getElementById('navbar-container');
-            if (navbarContainer) {
-                const homeHashMap = {
-                    '#': '../index.html',
-                    '#about': '../index.html#about',
-                    '#stack': '../index.html#stack',
-                    '#prospek': '../index.html#prospek',
-                    '#siswa': '../index.html#siswa'
-                };
-
-                Object.entries(homeHashMap).forEach(([from, to]) => {
-                    navbarContainer.querySelectorAll(`a[href="${from}"]`).forEach((link) => {
-                        link.setAttribute('href', to);
-                    });
-                });
-
-                navbarContainer.querySelectorAll('a[href="latihan/"], a[href="latihan/latihan-1.html"], a[href="latihan.html"]').forEach((link) => {
-                    link.setAttribute('href', 'index.html');
-                });
-
-                navbarContainer.querySelectorAll('a[href="tools/"], a[href="tools/index.html"]').forEach((link) => {
-                    link.setAttribute('href', '../tools/');
-                });
-            }
-
-            const footerContainer = document.getElementById('footer-container');
-            if (footerContainer) {
-                const footerLogo = footerContainer.querySelector('a[href="#"]');
-                if (footerLogo) footerLogo.setAttribute('href', '../index.html');
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            await Promise.all([
-                loadSharedComponent('navbar-container', '../components/sections/navbar.html'),
-                loadSharedComponent('footer-container', '../components/sections/footer.html')
-            ]);
-
-            normalizeSubpageLinks();
-            document.dispatchEvent(new CustomEvent('components:loaded'));
-        });
-    </script>
 </body>
 
 </html>

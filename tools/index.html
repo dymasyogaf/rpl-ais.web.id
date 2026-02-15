@@ -114,73 +114,7 @@
     <div id="footer-container" class="relative z-10"></div>
 
     <script src="../assets/js/main.js"></script>
-    <script>
-      async function loadComponent(containerId, filePath) {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-
-        try {
-          const response = await fetch(filePath);
-          if (!response.ok) {
-            throw new Error(`Failed to load ${filePath}: ${response.status}`);
-          }
-          container.innerHTML = await response.text();
-        } catch (error) {
-          console.error("Error loading component:", error);
-        }
-      }
-
-      function adjustNavbarLinksForTools() {
-        const navbarContainer = document.getElementById("navbar-container");
-        if (!navbarContainer) return;
-
-        navbarContainer.querySelectorAll("a[href]").forEach((link) => {
-          const href = link.getAttribute("href");
-          if (!href) return;
-
-          if (href === "#") {
-            link.setAttribute("href", "../");
-            return;
-          }
-
-          if (href === "tools/") {
-            link.setAttribute("href", "./");
-            return;
-          }
-
-          if (href === "latihan/") {
-            link.setAttribute("href", "../latihan/");
-            return;
-          }
-
-          if (href.startsWith("#")) {
-            link.setAttribute("href", `../${href}`);
-          }
-        });
-      }
-
-      function adjustFooterLinksForTools() {
-        const footerContainer = document.getElementById("footer-container");
-        if (!footerContainer) return;
-
-        const brandLink = footerContainer.querySelector("a.font-heading[href='#']");
-        if (brandLink) {
-          brandLink.setAttribute("href", "../");
-        }
-      }
-
-      async function initToolsLayout() {
-        await Promise.all([
-          loadComponent("navbar-container", "../components/sections/navbar.html"),
-          loadComponent("footer-container", "../components/sections/footer.html"),
-        ]);
-
-        adjustNavbarLinksForTools();
-        adjustFooterLinksForTools();
-        document.dispatchEvent(new CustomEvent("components:loaded"));
-      }
-
-      initToolsLayout();
-    </script>
+    <script src="../assets/js/shared-layout.js"></script>
+    <script src="../assets/js/pages/tools-layout.js"></script>
   </body>
 </html>

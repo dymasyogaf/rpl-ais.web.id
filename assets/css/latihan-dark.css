@@ -1,0 +1,86 @@
+:is(#latihan1-app, #latihan2-app) {
+  background-color: #020617 !important;
+  color: #e2e8f0 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-slate-50,
+:is(#latihan1-app, #latihan2-app) .bg-gray-50,
+:is(#latihan1-app, #latihan2-app) .bg-gray-100 {
+  background-color: #020617 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-white {
+  background-color: #0f172a !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-slate-100,
+:is(#latihan1-app, #latihan2-app) .bg-gray-200 {
+  background-color: #1e293b !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .border-slate-100,
+:is(#latihan1-app, #latihan2-app) .border-slate-200,
+:is(#latihan1-app, #latihan2-app) .border-gray-100,
+:is(#latihan1-app, #latihan2-app) .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .text-slate-900,
+:is(#latihan1-app, #latihan2-app) .text-slate-700,
+:is(#latihan1-app, #latihan2-app) .text-slate-600,
+:is(#latihan1-app, #latihan2-app) .text-slate-500,
+:is(#latihan1-app, #latihan2-app) .text-slate-400,
+:is(#latihan1-app, #latihan2-app) .text-indigo-900,
+:is(#latihan1-app, #latihan2-app) .text-gray-900,
+:is(#latihan1-app, #latihan2-app) .text-gray-800,
+:is(#latihan1-app, #latihan2-app) .text-gray-700,
+:is(#latihan1-app, #latihan2-app) .text-gray-600,
+:is(#latihan1-app, #latihan2-app) .text-gray-500,
+:is(#latihan1-app, #latihan2-app) .text-gray-400 {
+  color: #e2e8f0 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-amber-50,
+:is(#latihan1-app, #latihan2-app) .bg-blue-50 {
+  background-color: rgba(30, 41, 59, 0.8) !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .border-amber-100,
+:is(#latihan1-app, #latihan2-app) .border-blue-500 {
+  border-color: #475569 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .text-amber-800,
+:is(#latihan1-app, #latihan2-app) .text-amber-700,
+:is(#latihan1-app, #latihan2-app) .text-blue-800,
+:is(#latihan1-app, #latihan2-app) .text-blue-700 {
+  color: #cbd5e1 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-emerald-50,
+:is(#latihan1-app, #latihan2-app) .bg-green-100 {
+  background-color: rgba(16, 185, 129, 0.12) !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .border-emerald-100,
+:is(#latihan1-app, #latihan2-app) .border-green-700 {
+  border-color: rgba(16, 185, 129, 0.35) !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .bg-gray-800 {
+  background-color: #0b1220 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .text-green-400 {
+  color: #34d399 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .text-yellow-500,
+:is(#latihan1-app, #latihan2-app) .text-yellow-200 {
+  color: #facc15 !important;
+}
+
+:is(#latihan1-app, #latihan2-app) .text-red-400,
+:is(#latihan1-app, #latihan2-app) .text-red-300 {
+  color: #f87171 !important;
+}
