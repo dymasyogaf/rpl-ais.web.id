@@ -6,7 +6,9 @@
   "scripts": {
     "start": "python -m http.server 8000",
     "dev": "python -m http.server 8000",
-    "build": "node scripts/build-static.mjs",
+    "tailwind:build": "tailwindcss -c tailwind.config.js -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --minify",
+    "tailwind:watch": "tailwindcss -c tailwind.config.js -i ./assets/css/tailwind.input.css -o ./assets/css/tailwind.css --watch",
+    "build": "npm run tailwind:build && node scripts/build-static.mjs",
     "cliper:api": "node tools/cliper/apps/api/server.js",
     "deploy": "npx wrangler deploy",
     "lint:css": "stylelint assets/css/*.css --config .stylelintrc",
@@ -41,7 +43,8 @@
     "eslint": "^8.0.0",
     "prettier": "^3.0.0",
     "stylelint": "^15.0.0",
-    "stylelint-config-standard": "^34.0.0"
+    "stylelint-config-standard": "^34.0.0",
+    "tailwindcss": "^3.4.17"
   },
   "browserslist": [
     "> 1%",

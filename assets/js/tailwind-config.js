@@ -32,3 +32,26 @@ tailwind.config = {
     },
   },
 };
+
+// Inject favicon globally based on this script's path.
+(() => {
+  if (typeof document === "undefined") return;
+  if (document.querySelector('link[rel="icon"]')) return;
+
+  let faviconHref = "assets/favicon.svg";
+  const currentScript = document.currentScript;
+
+  if (currentScript && currentScript.src) {
+    try {
+      faviconHref = new URL("../favicon.svg", currentScript.src).href;
+    } catch {
+      // Keep default relative path when URL construction fails.
+    }
+  }
+
+  const faviconLink = document.createElement("link");
+  faviconLink.rel = "icon";
+  faviconLink.type = "image/svg+xml";
+  faviconLink.href = faviconHref;
+  document.head.appendChild(faviconLink);
+})();

@@ -1,14 +1,14 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remove Background | RPL Tools</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
     <meta name="description" content="Remove background gambar langsung dari browser.">
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
         rel="stylesheet">
@@ -153,6 +153,17 @@
             </section>
         </section>
     </main>
+
+    <div id="footer-container" class="relative z-10"></div>
+
+    <script src="../../assets/js/shared-layout.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            if (window.RPLSharedLayout && typeof window.RPLSharedLayout.initFooterOnly === "function") {
+                window.RPLSharedLayout.initFooterOnly("../../");
+            }
+        });
+    </script>
 
     <script>
         const fileInput = document.getElementById("file-input");
@@ -475,3 +486,6 @@
 </body>
 
 </html>
+
+
+

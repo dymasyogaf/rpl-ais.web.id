@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jurusan RPL | Rekayasa Perangkat Lunak</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
 
     <!-- Meta tags for SEO -->
     <meta name="description"
@@ -44,8 +45,7 @@
     <link rel="dns-prefetch" href="//api.dicebear.com">
 
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="assets/css/tailwind.css">
 
     <!-- Google Fonts: Plus Jakarta Sans & Sora -->
     <link
@@ -75,8 +75,38 @@
     <div id="siswa-container"></div>
     <div id="guru-container"></div>
     <div id="prospek-container"></div>
-    <div id="footer-container"></div>
-    <div id="chat-container"></div>
+    <div id="footer-container" class="relative z-10">
+        <footer class="relative z-10 py-12 px-6 bg-dark/50 backdrop-blur-md border-t border-white/5">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+                <div class="text-center md:text-left">
+                    <a href="#"
+                        class="font-heading font-bold text-xl text-white flex items-center gap-2 justify-center md:justify-start">
+                        <div class="w-8 h-8 bg-gradient-primary rounded-lg flex items-center justify-center">
+                            <i class="fa-solid fa-code text-white text-xs"></i>
+                        </div>
+                        RPL-AIS
+                    </a>
+                    <p class="text-slate-500 text-sm mt-3">Mencetak Generasi Programmer Masa Depan.</p>
+                </div>
+                <div class="flex gap-4">
+                    <a href="#" class="btn-footer-social instagram">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                    <a href="#" class="btn-footer-social tiktok">
+                        <i class="fa-brands fa-tiktok"></i>
+                    </a>
+                    <a href="#" class="btn-footer-social youtube">
+                        <i class="fa-brands fa-youtube"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="mt-12 pt-8 border-t border-white/5 text-center text-xs text-slate-600">
+                &copy; 2026 Jurusan RPL. All rights reserved. Crafted with <i
+                    class="fa-solid fa-heart text-primary mx-1"></i>
+                by RPL Team.
+            </div>
+        </footer>
+    </div>
 
     <!-- Script Logic -->
     <script src="assets/js/component-loader.js"></script>
@@ -84,3 +114,4 @@
 </body>
 
 </html>
+

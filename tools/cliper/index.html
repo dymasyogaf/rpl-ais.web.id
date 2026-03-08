@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Cliper | RPL Tools</title>
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
     <meta
       name="description"
       content="Potong video jadi beberapa part pendek dari upload file atau link YouTube."
     />
 
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="../../assets/js/tailwind-config.js"></script>
+    <link rel="stylesheet" href="../../assets/css/tailwind.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
@@ -245,6 +245,17 @@
         </div>
       </div>
     </div>
+
+    <div id="footer-container" class="relative z-10"></div>
+
+    <script src="../../assets/js/shared-layout.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        if (window.RPLSharedLayout && typeof window.RPLSharedLayout.initFooterOnly === "function") {
+          window.RPLSharedLayout.initFooterOnly("../../");
+        }
+      });
+    </script>
 
     <script>
       const modeUploadBtn = document.getElementById("mode-upload-btn");
@@ -749,4 +760,7 @@
     </script>
   </body>
 </html>
+
+
+
 
