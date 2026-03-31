@@ -4,13 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Compress & Convert | RPL Tools</title>
-    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="../../assets/favicon.svg" />
     <meta
       name="description"
       content="Kompres ukuran gambar dan convert format langsung dari browser."
     />
 
-    <link rel="stylesheet" href="../../assets/css/tailwind.css">
+    <link rel="stylesheet" href="../../assets/css/tailwind.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
       rel="stylesheet"
@@ -62,7 +62,7 @@
         </h1>
         <p class="text-slate-400 mt-3 max-w-2xl">
           Upload gambar, atur skala dan kualitas, pilih format output, lalu download hasil kompresi
-          sesuai kebutuhan.
+          atau icon sesuai kebutuhan.
         </p>
       </section>
 
@@ -108,6 +108,8 @@
                   <option value="jpeg">JPG (ukuran kecil)</option>
                   <option value="webp">WEBP (efisien)</option>
                   <option value="png">PNG (lossless)</option>
+                  <option value="svg">SVG Icon</option>
+                  <option value="ico">ICO Icon</option>
                 </select>
               </div>
 
@@ -127,6 +129,31 @@
                 />
                 <p id="quality-note" class="text-[11px] text-slate-500 mt-1">
                   Berlaku untuk JPG/WEBP.
+                </p>
+              </div>
+
+              <div
+                id="icon-settings"
+                class="hidden rounded-lg border border-white/10 bg-slate-950/60 p-3"
+              >
+                <label
+                  for="icon-size"
+                  class="text-xs uppercase tracking-wide text-slate-400 block mb-2"
+                  >Ukuran Icon</label
+                >
+                <select
+                  id="icon-size"
+                  class="w-full rounded-lg bg-slate-800 border border-white/10 text-slate-200 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-cyan-400/40"
+                >
+                  <option value="16">16 x 16</option>
+                  <option value="32">32 x 32</option>
+                  <option value="48">48 x 48</option>
+                  <option value="64" selected>64 x 64</option>
+                  <option value="128">128 x 128</option>
+                  <option value="256">256 x 256</option>
+                </select>
+                <p class="text-[11px] text-slate-500 mt-2">
+                  Icon dibuat kanvas persegi dengan gambar diposisikan di tengah.
                 </p>
               </div>
             </div>
@@ -167,7 +194,8 @@
 
         <section class="lg:col-span-3 glass-card rounded-2xl border border-white/10 p-5">
           <div class="mb-3 text-xs text-slate-400">
-            Tip: turunkan skala + kualitas untuk kompresi lebih agresif.
+            Tip: turunkan skala + kualitas untuk kompresi lebih agresif, atau pilih ukuran khusus
+            saat membuat icon.
           </div>
           <div
             class="checkerboard rounded-xl border border-white/10 min-h-[280px] md:min-h-[460px] grid place-items-center"
@@ -202,6 +230,8 @@
       const qualityValue = document.getElementById("quality-value");
       const qualityWrap = document.getElementById("quality-wrap");
       const qualityNote = document.getElementById("quality-note");
+      const iconSettings = document.getElementById("icon-settings");
+      const iconSizeSelect = document.getElementById("icon-size");
       const resetBtn = document.getElementById("reset-btn");
       const downloadBtn = document.getElementById("download-btn");
       const originalSizeText = document.getElementById("original-size");
@@ -235,6 +265,12 @@
         if (format === "webp") {
           return { mime: "image/webp", extension: "webp" };
         }
+        if (format === "svg") {
+          return { mime: "image/svg+xml", extension: "svg" };
+        }
+        if (format === "ico") {
+          return { mime: "image/x-icon", extension: "ico" };
+        }
         return { mime: "image/png", extension: "png" };
       }
 
@@ -242,18 +278,30 @@
         return format === "jpeg" || format === "webp";
       }
 
+      function isIconFormat(format) {
+        return format === "svg" || format === "ico";
+      }
+
+      function getDownloadLabel(format) {
+        if (format === "jpeg") return "JPG";
+        return format.toUpperCase();
+      }
+
       function updateDownloadButtonLabel() {
-        const format = formatSelect.value.toUpperCase();
-        downloadBtn.textContent = `Download ${format}`;
+        downloadBtn.textContent = `Download ${getDownloadLabel(formatSelect.value)}`;
       }
 
       function updateQualityVisibility() {
         const lossy = isLossyFormat(formatSelect.value);
+        const iconMode = isIconFormat(formatSelect.value);
         qualityInput.disabled = !lossy;
         qualityWrap.classList.toggle("opacity-60", !lossy);
+        iconSettings.classList.toggle("hidden", !iconMode);
         qualityNote.textContent = lossy
           ? "Berlaku untuk JPG/WEBP."
-          : "PNG lossless, kualitas tidak dipakai.";
+          : iconMode
+            ? "SVG/ICO memakai ukuran icon, bukan slider kualitas."
+            : "PNG lossless, kualitas tidak dipakai.";
       }
 
       function resetSizeIndicators() {
@@ -311,12 +359,61 @@
         });
       }
 
+      function buildIcoBlobFromPng(pngBlob, size) {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = () => {
+            const pngBytes = new Uint8Array(reader.result);
+            const header = new ArrayBuffer(6);
+            const headerView = new DataView(header);
+            headerView.setUint16(0, 0, true);
+            headerView.setUint16(2, 1, true);
+            headerView.setUint16(4, 1, true);
+
+            const entry = new ArrayBuffer(16);
+            const entryView = new DataView(entry);
+            entryView.setUint8(0, size >= 256 ? 0 : size);
+            entryView.setUint8(1, size >= 256 ? 0 : size);
+            entryView.setUint8(2, 0);
+            entryView.setUint8(3, 0);
+            entryView.setUint16(4, 1, true);
+            entryView.setUint16(6, 32, true);
+            entryView.setUint32(8, pngBytes.length, true);
+            entryView.setUint32(12, 22, true);
+
+            resolve(new Blob([header, entry, pngBytes], { type: "image/x-icon" }));
+          };
+          reader.readAsArrayBuffer(pngBlob);
+        });
+      }
+
+      function createSvgBlobFromCanvas(sourceCanvas) {
+        const pngDataUrl = sourceCanvas.toDataURL("image/png");
+        const size = sourceCanvas.width;
+        const svg = [
+          `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">`,
+          `<image href="${pngDataUrl}" width="${size}" height="${size}"/>`,
+          "</svg>",
+        ].join("");
+        return new Blob([svg], { type: "image/svg+xml" });
+      }
+
       async function generateOutputBlob() {
         if (!canvas.width || !canvas.height) return null;
 
         const selectedFormat = formatSelect.value;
         const quality = Number(qualityInput.value) / 100;
         const { mime } = getFormatMeta(selectedFormat);
+
+        if (selectedFormat === "svg") {
+          return createSvgBlobFromCanvas(canvas);
+        }
+
+        if (selectedFormat === "ico") {
+          const size = Number(iconSizeSelect.value);
+          const pngBlob = await canvasToBlob("image/png");
+          return buildIcoBlobFromPng(pngBlob, size);
+        }
 
         if (selectedFormat !== "jpeg") {
           return canvasToBlob(mime, quality);
@@ -373,6 +470,25 @@
 
       function drawImageToCanvas(img) {
         const scale = Number(scaleInput.value) / 100;
+        const selectedFormat = formatSelect.value;
+
+        if (isIconFormat(selectedFormat)) {
+          const iconSize = Number(iconSizeSelect.value);
+          const maxWidth = Math.max(1, Math.floor(img.width * scale));
+          const maxHeight = Math.max(1, Math.floor(img.height * scale));
+          const fitRatio = Math.min(iconSize / maxWidth, iconSize / maxHeight);
+          const drawWidth = Math.max(1, Math.floor(maxWidth * fitRatio));
+          const drawHeight = Math.max(1, Math.floor(maxHeight * fitRatio));
+          const offsetX = Math.floor((iconSize - drawWidth) / 2);
+          const offsetY = Math.floor((iconSize - drawHeight) / 2);
+
+          canvas.width = iconSize;
+          canvas.height = iconSize;
+          ctx.clearRect(0, 0, iconSize, iconSize);
+          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+          return;
+        }
+
         const newWidth = Math.max(1, Math.floor(img.width * scale));
         const newHeight = Math.max(1, Math.floor(img.height * scale));
 
@@ -404,6 +520,7 @@
         formatSelect.value = "jpeg";
         qualityInput.value = "85";
         qualityValue.textContent = "85";
+        iconSizeSelect.value = "64";
         canvas.width = 0;
         canvas.height = 0;
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -453,8 +570,9 @@
       formatSelect.addEventListener("change", () => {
         updateDownloadButtonLabel();
         updateQualityVisibility();
-        refreshExportPreview();
+        processImage();
       });
+      iconSizeSelect.addEventListener("change", processImage);
       qualityInput.addEventListener("input", () => {
         qualityValue.textContent = qualityInput.value;
         if (isLossyFormat(formatSelect.value)) {
@@ -485,6 +603,3 @@
     </style>
   </body>
 </html>
-
-
-
