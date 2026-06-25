@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { id: "siswa-container", file: "components/sections/siswa.html" },
     { id: "guru-container", file: "components/sections/guru.html" },
     { id: "prospek-container", file: "components/sections/prospek.html" },
-    { id: "footer-container", file: "components/sections/footer.html" },
+    { id: "footer-container", file: "components/sections/site-footer.html" },
   ];
 
   // Fungsi untuk memuat komponen

@@ -144,7 +144,7 @@
   async function initLatihanLayout() {
     const [, isFooterLoaded] = await Promise.all([
       loadComponent("navbar-container", "../components/sections/navbar.html"),
-      loadComponent("footer-container", "../components/sections/footer.html"),
+      loadComponent("footer-container", "../components/sections/site-footer.html"),
     ]);
 
     if (!isFooterLoaded) {
@@ -161,7 +161,7 @@
   async function initToolsLayout() {
     const [, isFooterLoaded] = await Promise.all([
       loadComponent("navbar-container", "../components/sections/navbar.html"),
-      loadComponent("footer-container", "../components/sections/footer.html"),
+      loadComponent("footer-container", "../components/sections/site-footer.html"),
     ]);
 
     if (!isFooterLoaded) {
@@ -182,7 +182,7 @@
 
     const isFooterLoaded = await loadComponent(
       "footer-container",
-      `${rootPath}components/sections/footer.html`,
+      `${rootPath}components/sections/site-footer.html`,
     );
 
     if (!isFooterLoaded && footerContainer && !footerContainer.innerHTML.trim()) {
@@ -206,7 +206,7 @@
 
     const rootUrl = resolveSharedLayoutRootUrl();
     if (rootUrl) {
-      const footerUrl = new URL("components/sections/footer.html", rootUrl).href;
+      const footerUrl = new URL("components/sections/site-footer.html", rootUrl).href;
       const homeUrl = new URL("index.html", rootUrl).href;
       const isFooterLoaded = await loadComponent("footer-container", footerUrl);
 
