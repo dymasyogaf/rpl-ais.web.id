@@ -13,11 +13,9 @@ function syncNavElements() {
 function handleNavbarScroll() {
   if (!navbar) return;
   if (window.scrollY > 50) {
-    navbar.classList.add("bg-dark/80", "border-white/10", "shadow-lg");
-    navbar.classList.remove("border-transparent");
+    navbar.classList.add("shadow-[0_10px_30px_rgba(0,195,255,0.2)]");
   } else {
-    navbar.classList.remove("bg-dark/80", "border-white/10", "shadow-lg");
-    navbar.classList.add("border-transparent");
+    navbar.classList.remove("shadow-[0_10px_30px_rgba(0,195,255,0.2)]");
   }
 }
 
@@ -38,7 +36,16 @@ function initNavigation() {
   syncNavElements();
 
   if (navbar && !isNavbarScrollBound) {
-    window.addEventListener("scroll", handleNavbarScroll);
+    let ticking = false;
+    window.addEventListener("scroll", () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          handleNavbarScroll();
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: true });
     isNavbarScrollBound = true;
   }
   handleNavbarScroll();
@@ -70,6 +77,88 @@ function initNavigation() {
 
     anchor.dataset.scrollBound = "true";
   });
+
+  initScrollSpy();
+}
+
+let scrollSpyInitialized = false;
+const activeSections = new Set();
+
+function initScrollSpy() {
+  if (scrollSpyInitialized) return;
+
+  const navLinks = document.querySelectorAll(".scifi-link");
+  if (navLinks.length === 0) return;
+
+  const targetIds = Array.from(navLinks)
+    .map(link => link.getAttribute("href"))
+    .filter(href => href && href.startsWith("#") && href.length > 1)
+    .map(href => href.substring(1));
+
+  const sections = [];
+  targetIds.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sections.push(el);
+  });
+
+  // Handle static page matching (e.g. /tools/ or /latihan/)
+  const currentPath = window.location.pathname;
+  navLinks.forEach(link => {
+    const href = link.getAttribute("href");
+    const text = link.textContent.toLowerCase();
+    if (href && !href.startsWith("#")) {
+      if (currentPath.includes("/tools") && text.includes("tools")) {
+        link.classList.add("active");
+      } else if (currentPath.includes("/latihan") && text.includes("latihan")) {
+        link.classList.add("active");
+      }
+    }
+  });
+
+  if (sections.length === 0) return;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "-20% 0px -40% 0px",
+    threshold: 0
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const id = entry.target.getAttribute("id");
+      if (entry.isIntersecting) {
+        activeSections.add(id);
+      } else {
+        activeSections.delete(id);
+      }
+    });
+
+    let activeId = null;
+    // Iterate backwards so nested/later sections (like stack inside about) get priority
+    for (let i = sections.length - 1; i >= 0; i--) {
+      if (activeSections.has(sections[i].id)) {
+        activeId = sections[i].id;
+        break;
+      }
+    }
+
+    navLinks.forEach((link) => {
+      // Don't modify external links that are already active by path
+      const href = link.getAttribute("href");
+      if (href && !href.startsWith("#")) return;
+      
+      link.classList.remove("active");
+      if (activeId && href === `#${activeId}`) {
+        link.classList.add("active");
+      }
+    });
+  }, observerOptions);
+
+  sections.forEach((section) => {
+    observer.observe(section);
+  });
+
+  scrollSpyInitialized = true;
 }
 
 // Carousel logic
@@ -133,8 +222,16 @@ function initStudentCarousel() {
     isPaused = false;
   });
 
+  let isCarouselVisible = true;
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      isCarouselVisible = entries[0].isIntersecting;
+    }, { threshold: 0.1 });
+    observer.observe(slider);
+  }
+
   const autoScroll = () => {
-    if (!isDown && !isPaused && slider) {
+    if (!isDown && !isPaused && slider && isCarouselVisible) {
       slider.scrollLeft += autoScrollSpeed;
       const maxScroll = slider.scrollWidth / 2;
       if (maxScroll > 0 && slider.scrollLeft >= maxScroll) {
@@ -576,30 +673,37 @@ class SkillsSphere {
     const THREE = window.THREE;
     if (!THREE) return Promise.resolve(new Map());
 
-    const textureLoader = new THREE.TextureLoader();
-    textureLoader.setCrossOrigin("anonymous");
     const textureMap = new Map();
 
     const loaders = this.allSkills.map(
       (skill) =>
         new Promise((resolve) => {
-          textureLoader.load(
-            skill.icon,
-            (texture) => {
-              if ("colorSpace" in texture && THREE.SRGBColorSpace) {
-                texture.colorSpace = THREE.SRGBColorSpace;
-              } else if (THREE.sRGBEncoding) {
-                texture.encoding = THREE.sRGBEncoding;
-              }
-              textureMap.set(skill.icon, texture);
-              resolve();
-            },
-            undefined,
-            () => {
-              textureMap.set(skill.icon, null);
-              resolve();
-            },
-          );
+          const img = new Image();
+          img.crossOrigin = "anonymous";
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            canvas.width = 256;
+            canvas.height = 256;
+            const ctx = canvas.getContext("2d");
+            ctx.clearRect(0, 0, 256, 256);
+            ctx.drawImage(img, 0, 0, 256, 256);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            if ("colorSpace" in texture && THREE.SRGBColorSpace) {
+              texture.colorSpace = THREE.SRGBColorSpace;
+            } else if (THREE.sRGBEncoding) {
+              texture.encoding = THREE.sRGBEncoding;
+            }
+            textureMap.set(skill.icon, texture);
+            resolve();
+          };
+          img.onerror = (err) => {
+            console.warn("Failed to load texture:", skill.icon, err);
+            textureMap.set(skill.icon, null);
+            resolve();
+          };
+          img.src = skill.icon;
         }),
     );
 

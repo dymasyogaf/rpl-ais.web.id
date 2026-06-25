@@ -1,45 +1,220 @@
-<nav id="navbar"
-    class="fixed w-full z-50 top-0 transition-all duration-300 border-b border-transparent backdrop-blur-md"
-    role="navigation" aria-label="Main navigation">
-    <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <!-- Logo -->
-        <a href="#" class="font-heading font-bold text-2xl text-white flex items-center gap-2"
-            aria-label="RPL AIS Home">
-            <div
-                class="w-9 h-9 bg-gradient-primary rounded-xl flex items-center justify-center shadow-lg shadow-primary/20">
-                <i class="fa-solid fa-code text-white text-sm"></i>
-            </div>
-            RPL<span class="text-primary">-AIS</span>
-        </a>
+<style>
+  /* Cyberpunk / Sci-Fi Navbar Theme */
+  .nav-scifi-wrapper {
+    background-color: #020611;
+    background-image: 
+      linear-gradient(90deg, rgba(0, 195, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(rgba(0, 195, 255, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+    border-top: 1px solid rgba(0, 195, 255, 0.4);
+    border-bottom: 1px solid rgba(0, 195, 255, 0.4);
+    box-shadow: 0 0 30px rgba(0, 195, 255, 0.1), inset 0 0 20px rgba(0, 195, 255, 0.15);
+    position: relative;
+    overflow: hidden;
+  }
 
-        <!-- Desktop Menu -->
-        <div class="hidden md:flex items-center gap-8 ml-auto mr-8">
-            <a href="#about" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tentang</a>
-            <a href="#stack" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tech
-                Stack</a>
-            <a href="#prospek" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Prospek</a>
-            <a href="#siswa" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Siswa</a>
-            <a href="tools/" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Tools</a>
-            <a href="latihan/" class="text-sm font-medium text-slate-400 hover:text-white transition-colors">Latihan</a>
-        </div>
+  /* Glowing accents on the top/bottom borders */
+  .nav-scifi-wrapper::before, .nav-scifi-wrapper::after {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 200px;
+    background: #fff;
+    box-shadow: 0 0 10px #00c3ff, 0 0 20px #00c3ff, 0 0 40px #00c3ff;
+    z-index: 10;
+  }
+  .nav-scifi-wrapper::before { top: -1px; left: 18%; }
+  .nav-scifi-wrapper::after { bottom: -1px; right: 18%; }
 
-        <!-- CTA Button -->
-        <div class="flex items-center gap-4">
-            <button id="mobile-menu-toggle" class="btn-mobile-menu md:hidden" aria-label="Toggle mobile menu"
-                aria-controls="mobile-menu" aria-expanded="false">
-                <i class="fa-solid fa-bars"></i>
-            </button>
+  /* Tech background graphics */
+  .nav-tech-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(circle at 15% 50%, rgba(0, 195, 255, 0.15) 0%, transparent 35%),
+      radial-gradient(circle at 85% 50%, rgba(0, 195, 255, 0.1) 0%, transparent 35%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Clip path shapes */
+  .clip-logo-outer {
+    clip-path: polygon(0 0, calc(100% - 30px) 0, 100% 50%, calc(100% - 30px) 100%, 0 100%);
+    background: linear-gradient(90deg, #00c3ff, rgba(0,195,255,0.05));
+    padding: 1px;
+    padding-right: 2px;
+  }
+  .clip-logo-inner {
+    clip-path: polygon(0 0, calc(100% - 29px) 0, 100% 50%, calc(100% - 29px) 100%, 0 100%);
+    background: linear-gradient(90deg, #020914, #041226);
+    height: 100%;
+    display: flex;
+    align-items: center;
+    box-shadow: inset 10px 0 20px rgba(0, 195, 255, 0.1);
+  }
+
+  .clip-menu-outer {
+    clip-path: polygon(18px 0, calc(100% - 18px) 0, 100% 50%, calc(100% - 18px) 100%, 18px 100%, 0 50%);
+    background: rgba(0, 195, 255, 0.5);
+    padding: 1px;
+  }
+  .clip-menu-inner {
+    clip-path: polygon(17px 0, calc(100% - 17px) 0, 100% 50%, calc(100% - 17px) 100%, 17px 100%, 0 50%);
+    background: #010611;
+    box-shadow: inset 0 0 30px rgba(0, 195, 255, 0.15);
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+
+  .clip-btn-outer {
+    clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    background: rgba(0, 195, 255, 0.6);
+    padding: 1px;
+  }
+  .clip-btn-inner {
+    clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%);
+    background: #010611;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+    box-shadow: inset 0 0 10px rgba(0, 195, 255, 0.2);
+  }
+  .clip-btn-inner:hover {
+    background: rgba(0, 195, 255, 0.2);
+    box-shadow: inset 0 0 20px rgba(0, 195, 255, 0.5);
+  }
+
+  /* Small dot separator */
+  .scifi-dot {
+    width: 3px;
+    height: 3px;
+    background: #00c3ff;
+    transform: rotate(45deg);
+    box-shadow: 0 0 6px #00c3ff, 0 0 10px #00c3ff;
+    margin: 0 4px;
+    flex-shrink: 0;
+  }
+
+  /* Link styling */
+  .scifi-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #e2f1ff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 8px 16px;
+    transition: all 0.3s;
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+  .scifi-link i {
+    color: #00c3ff;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+  }
+  .scifi-link:hover {
+    color: #fff;
+    text-shadow: 0 0 10px #00c3ff;
+  }
+  .scifi-link:hover i {
+    text-shadow: 0 0 12px #00c3ff;
+    transform: scale(1.1);
+  }
+
+  /* Active Link Styling */
+  .scifi-link.active {
+    color: #fff;
+    background: rgba(0, 195, 255, 0.1);
+    box-shadow: inset 2px 0 0 #00c3ff, inset -2px 0 0 #00c3ff;
+    text-shadow: 0 0 10px #00c3ff;
+  }
+  .scifi-link.active i {
+    color: #00c3ff;
+    text-shadow: 0 0 12px #00c3ff;
+  }
+
+  /* Logo Glowing Box */
+  .logo-icon-box {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #00d2ff, #005eff);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(0, 195, 255, 0.8);
+  }
+  .logo-text {
+    font-family: 'Sora', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: #fff;
+    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(255,255,255,0.4);
+  }
+  .logo-text-accent {
+    color: #00c3ff;
+    text-shadow: 0 0 15px rgba(0,195,255,0.8);
+  }
+</style>
+
+<nav id="navbar" class="fixed left-0 right-0 z-50 top-0 transition-all duration-300" role="navigation" aria-label="Main navigation">
+  <div class="nav-scifi-wrapper w-full h-20 md:h-24 flex items-center justify-between">
+    <div class="nav-tech-bg"></div>
+
+    <!-- Left: Logo -->
+    <a href="#" class="clip-logo-outer h-16 md:h-20 z-10 w-[240px] md:w-[300px] flex-shrink-0 group">
+      <div class="clip-logo-inner px-6 md:px-8 gap-4">
+        <div class="logo-icon-box group-hover:scale-105 transition-transform">
+          <i class="fa-solid fa-code text-white text-xl"></i>
         </div>
+        <div class="logo-text">RPL<span class="logo-text-accent">-AIS</span></div>
+      </div>
+    </a>
+
+    <!-- Middle: Links (Hidden on mobile) -->
+    <div class="hidden md:flex flex-1 justify-center items-center z-10 px-4">
+      <div class="clip-menu-outer h-14 w-full max-w-[800px]">
+        <div class="clip-menu-inner w-full px-4 lg:px-8 justify-between">
+          <a href="#about" class="scifi-link"><i class="fa-regular fa-user"></i> Tentang</a>
+          <div class="scifi-dot"></div>
+          <a href="#stack" class="scifi-link"><i class="fa-solid fa-layer-group"></i> Tech Stack</a>
+          <div class="scifi-dot"></div>
+          <a href="#siswa" class="scifi-link"><i class="fa-solid fa-users"></i> Siswa</a>
+          <div class="scifi-dot"></div>
+          <a href="#prospek" class="scifi-link"><i class="fa-solid fa-arrow-trend-up"></i> Prospek</a>
+          <div class="scifi-dot"></div>
+          <a href="tools/" class="scifi-link"><i class="fa-solid fa-wrench"></i> Tools</a>
+          <div class="scifi-dot"></div>
+          <a href="latihan/" class="scifi-link"><i class="fa-solid fa-crosshairs"></i> Latihan</a>
+        </div>
+      </div>
     </div>
 
-    <!-- Mobile Menu -->
-    <div id="mobile-menu"
-        class="hidden md:hidden bg-[#16191E] border-b border-white/10 absolute w-full px-6 py-4 flex flex-col gap-4 shadow-2xl">
-        <a href="#about" class="block text-slate-300 hover:text-primary">Tentang</a>
-        <a href="#stack" class="block text-slate-300 hover:text-primary">Tech Stack</a>
-        <a href="#prospek" class="block text-slate-300 hover:text-primary">Prospek</a>
-        <a href="#siswa" class="block text-slate-300 hover:text-primary">Siswa</a>
-        <a href="tools/" class="block text-slate-300 hover:text-primary">Tools</a>
-        <a href="latihan/" class="block text-slate-300 hover:text-primary">Latihan</a>
+    <!-- Right: Mobile Toggle & Action -->
+    <div class="flex items-center gap-4 z-10 mr-4 md:mr-8">
+      <!-- Hamburger -->
+      <button id="mobile-menu-toggle" class="clip-btn-outer w-12 h-14 md:hidden" aria-label="Toggle mobile menu">
+        <div class="clip-btn-inner text-white text-xl">
+          <i class="fa-solid fa-bars"></i>
+        </div>
+      </button>
     </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu"
+      class="hidden md:hidden absolute top-full left-0 right-0 mt-2 mx-4 border-2 border-[#00c3ff]/50 p-4 flex-col gap-2 shadow-[0_15px_50px_rgba(0,195,255,0.4)] origin-top transition-all z-[100]" style="background-color: #010611; clip-path: polygon(15px 0, 100% 0, 100% calc(100% - 15px), calc(100% - 15px) 100%, 0 100%, 0 15px);">
+      <a href="#about" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-regular fa-user w-6"></i> Tentang</a>
+      <a href="#stack" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-solid fa-layer-group w-6"></i> Tech Stack</a>
+      <a href="#siswa" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-solid fa-users w-6"></i> Siswa</a>
+      <a href="#prospek" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-solid fa-arrow-trend-up w-6"></i> Prospek</a>
+      <a href="tools/" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-solid fa-wrench w-6"></i> Tools</a>
+      <a href="latihan/" class="scifi-link border-b border-[#00c3ff]/20 pb-3"><i class="fa-solid fa-crosshairs w-6"></i> Latihan</a>
+      <a href="https://wa.me/6285129992225" target="_blank" class="scifi-link mt-2 text-[#00c3ff] justify-center bg-[#00c3ff]/10 py-3 hover:bg-[#00c3ff]/20 rounded"><i class="fa-brands fa-whatsapp"></i> Hubungi Kami</a>
+  </div>
 </nav>

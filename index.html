@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id" class="dark scroll-smooth">
 
 <head>
@@ -39,7 +39,17 @@
         as="style">
     <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" as="style">
 
-    <!-- DNS prefetch for external domains -->
+    <!-- Preload critical HTML components -->
+    <link rel="preload" href="components/sections/navbar.html" as="fetch" crossorigin="anonymous">
+    <link rel="preload" href="components/sections/hero.html" as="fetch" crossorigin="anonymous">
+
+    <!-- Resource Hints -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://api.dicebear.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdn.simpleicons.org">
     <link rel="dns-prefetch" href="//fonts.googleapis.com">
     <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
     <link rel="dns-prefetch" href="//api.dicebear.com">
@@ -47,9 +57,9 @@
     <!-- Tailwind CSS -->
     <link rel="stylesheet" href="assets/css/tailwind.css">
 
-    <!-- Google Fonts: Plus Jakarta Sans & Sora -->
+    <!-- Google Fonts: Space Grotesk & Sora -->
     <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap"
         rel="stylesheet">
 
     <!-- Font Awesome Icons -->
@@ -109,8 +119,8 @@
     </div>
 
     <!-- Script Logic -->
-    <script src="assets/js/component-loader.js"></script>
-    <script src="assets/js/main.js"></script>
+    <script src="assets/js/component-loader.js?v=3"></script>
+    <script src="assets/js/main.js?v=3"></script>
 </body>
 
 </html>

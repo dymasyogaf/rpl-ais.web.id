@@ -261,6 +261,7 @@
       let activeItemId = null;
       let isProcessing = false;
       let pendingProcess = false;
+      let forceReprocessQueue = false;
 
       function formatBytes(bytes) {
         if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
@@ -429,6 +430,9 @@
           };
 
           img.onload = async () => {
+            if (!filesData.some(f => f.id === fileItem.id)) {
+               return resolve();
+            }
             try {
               const canvas = document.createElement("canvas");
               const ctx = canvas.getContext("2d");
@@ -538,6 +542,11 @@
               if (fileItem.blobUrl) URL.revokeObjectURL(fileItem.blobUrl);
               fileItem.blobUrl = URL.createObjectURL(blob);
               
+              if (!filesData.some(f => f.id === fileItem.id)) {
+                 URL.revokeObjectURL(fileItem.blobUrl);
+                 return resolve();
+              }
+              
               renderList();
               resolve();
             } catch (err) {
@@ -555,6 +564,10 @@
         try {
           if (filesData.length === 0) return;
           
+          if (forceReprocess) {
+             forceReprocessQueue = true;
+          }
+          
           if (isProcessing) {
              pendingProcess = true;
              return;
@@ -564,8 +577,11 @@
           
           do {
              pendingProcess = false;
+             let currentForce = forceReprocessQueue;
+             forceReprocessQueue = false;
+             
              for (const item of filesData) {
-               if (forceReprocess || item.status === "error" || item.status === "processing") {
+               if (currentForce || item.status === "error" || item.status === "processing") {
                  item.status = "processing";
                }
              }
@@ -573,11 +589,13 @@
              
              for (const item of filesData) {
                if (item.status === "processing") {
+                  if (forceReprocessQueue) {
+                     pendingProcess = true;
+                     break;
+                  }
                   await processFile(item);
                }
              }
-             // Turn off forceReprocess for subsequent loops if new files are added during processing
-             forceReprocess = false; 
           } while (pendingProcess);
           
           isProcessing = false;
@@ -692,10 +710,10 @@
             </div>
             
             <div class="flex items-center gap-2 mt-auto">
-               <button onclick="downloadSingle('${item.id}'); event.stopPropagation();" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 text-slate-300 flex items-center justify-center transition border border-white/10 text-xs gap-1 disabled:opacity-50 disabled:cursor-not-allowed" ${item.status !== 'done' ? 'disabled' : ''}>
+               <button title="Unduh gambar ini" onclick="downloadSingle('${item.id}'); event.stopPropagation();" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 text-slate-300 flex items-center justify-center transition border border-white/10 text-xs gap-1 disabled:opacity-50 disabled:cursor-not-allowed" ${item.status !== 'done' ? 'disabled' : ''}>
                  <i class="fa-solid fa-download"></i> Unduh
                </button>
-               <button onclick="removeFile('${item.id}'); event.stopPropagation();" class="w-8 py-1.5 rounded-lg bg-slate-800 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 text-slate-300 flex items-center justify-center transition border border-white/10">
+               <button title="Hapus dari daftar" onclick="removeFile('${item.id}'); event.stopPropagation();" class="w-8 py-1.5 rounded-lg bg-slate-800 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 text-slate-300 flex items-center justify-center transition border border-white/10">
                  <i class="fa-solid fa-trash-can text-xs"></i>
                </button>
             </div>

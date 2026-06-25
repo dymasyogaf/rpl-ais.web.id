@@ -57,15 +57,27 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     try {
-      const response = await fetch(filePath);
+      // DEVELOPMENT MODE: Bypass cache completely
+      // const cacheKey = `rpl_comp_v2_${filePath}`;
+      // const cachedHtml = sessionStorage.getItem(cacheKey);
+      
+      // if (cachedHtml) {
+      //   container.innerHTML = cachedHtml;
+      //   return true;
+      // }
+
+      // Tambahkan timestamp di fetch agar benar-benar fresh
+      const response = await fetch(`${filePath}?t=${new Date().getTime()}`);
       if (!response.ok) {
         throw new Error(`Failed to load ${filePath}: ${response.status}`);
       }
       const html = await response.text();
+      // sessionStorage.setItem(cacheKey, html); // Disabling cache set too
       container.innerHTML = html;
       return true;
     } catch (error) {
       console.error("Error loading component:", error);
+      container.innerHTML = `<div class="p-8 text-center text-slate-500 border border-red-500/20 bg-red-500/5 rounded-xl mx-auto my-4 max-w-4xl">Gagal memuat komponen eksternal. Silakan periksa koneksi internet atau muat ulang halaman.</div>`;
       return false;
     }
   }
@@ -83,11 +95,19 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     if (typeof registerSpotlightCards === "function") {
-      registerSpotlightCards();
+      try {
+        registerSpotlightCards();
+      } catch (e) {
+        console.error("Error registering spotlight cards:", e);
+      }
     }
 
     if (typeof initSkillsGlobe === "function") {
-      initSkillsGlobe();
+      try {
+        initSkillsGlobe();
+      } catch (e) {
+        console.error("Error initializing skills globe:", e);
+      }
     }
 
     document.dispatchEvent(new CustomEvent("components:loaded"));
