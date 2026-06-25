@@ -1,4 +1,4 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="id" class="dark scroll-smooth">
   <head>
     <meta charset="UTF-8" />
@@ -21,6 +21,8 @@
     />
     <link rel="stylesheet" href="../../assets/css/main.css" />
     <link rel="stylesheet" href="../../assets/css/components.css" />
+    <!-- JSZip for batch downloading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
   </head>
 
   <body
@@ -61,20 +63,19 @@
           Compress & Convert
         </h1>
         <p class="text-slate-400 mt-3 max-w-2xl">
-          Upload gambar, atur skala dan kualitas, pilih format output, lalu download hasil kompresi
-          atau icon sesuai kebutuhan.
+          Upload banyak gambar sekaligus, atur skala dan kualitas, pilih format output (termasuk AVIF), lalu download satu per satu atau semua dalam format ZIP.
         </p>
       </section>
 
-      <section class="grid grid-cols-1 lg:grid-cols-5 gap-6">
-        <aside class="lg:col-span-2 glass-card rounded-2xl border border-white/10 p-6 h-fit">
+      <section class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+        <aside class="lg:col-span-4 glass-card rounded-2xl border border-white/10 p-6 h-fit">
           <label
-            class="w-full h-36 rounded-xl border-2 border-dashed border-slate-600 hover:border-cyan-400/70 transition flex flex-col items-center justify-center cursor-pointer text-center px-4"
+            class="w-full h-36 rounded-xl border-2 border-dashed border-slate-600 hover:border-cyan-400/70 transition flex flex-col items-center justify-center cursor-pointer text-center px-4 relative group overflow-hidden"
           >
-            <input id="file-input" type="file" accept="image/*" class="hidden" />
-            <i class="fa-solid fa-upload text-cyan-300 text-xl mb-2"></i>
+            <input id="file-input" type="file" accept="image/*" multiple class="hidden" />
+            <i class="fa-solid fa-upload text-cyan-300 text-2xl mb-2 group-hover:scale-110 transition-transform"></i>
             <span class="text-white font-semibold">Upload Gambar</span>
-            <span id="file-name" class="text-xs text-slate-400 mt-1">Belum ada file dipilih</span>
+            <span id="file-name" class="text-xs text-slate-400 mt-1">Bisa pilih banyak gambar sekaligus</span>
           </label>
 
           <div class="mt-6 space-y-5">
@@ -94,7 +95,7 @@
               />
             </div>
 
-            <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-4">
+            <div class="rounded-xl border border-white/10 bg-slate-900/50 p-4 space-y-4">
               <div>
                 <label
                   for="download-format"
@@ -107,6 +108,7 @@
                 >
                   <option value="jpeg">JPG (ukuran kecil)</option>
                   <option value="webp">WEBP (efisien)</option>
+                  <option value="avif">AVIF (kualitas tinggi, ukuran kecil)</option>
                   <option value="png">PNG (lossless)</option>
                   <option value="svg">SVG Icon</option>
                   <option value="ico">ICO Icon</option>
@@ -128,13 +130,13 @@
                   class="w-full accent-cyan-400"
                 />
                 <p id="quality-note" class="text-[11px] text-slate-500 mt-1">
-                  Berlaku untuk JPG/WEBP.
+                  Berlaku untuk format lossy (JPG/WEBP/AVIF).
                 </p>
               </div>
 
               <div
                 id="icon-settings"
-                class="hidden rounded-lg border border-white/10 bg-slate-950/60 p-3"
+                class="hidden rounded-lg border border-white/10 bg-slate-950/60 p-3 mt-4"
               >
                 <label
                   for="icon-size"
@@ -158,22 +160,6 @@
               </div>
             </div>
 
-            <div class="rounded-xl border border-white/10 bg-slate-900/50 p-3 space-y-2">
-              <p class="text-xs uppercase tracking-wide text-slate-400">Indikator Ukuran</p>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-slate-400">File Asli</span>
-                <span id="original-size" class="text-slate-200 font-medium">-</span>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-slate-400">Estimasi Hasil</span>
-                <span id="output-size" class="text-slate-200 font-medium">-</span>
-              </div>
-              <div class="flex items-center justify-between text-sm">
-                <span class="text-slate-400">Perubahan</span>
-                <span id="size-change" class="text-cyan-300 font-semibold">-</span>
-              </div>
-            </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
               <button
                 id="reset-btn"
@@ -182,29 +168,59 @@
                 Reset
               </button>
               <button
-                id="download-btn"
-                class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:brightness-110 transition text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed"
+                id="download-all-btn"
+                class="px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white hover:brightness-110 transition text-sm font-semibold disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
                 disabled
               >
-                Download JPG
+                <i class="fa-solid fa-file-zipper"></i> ZIP Semua
               </button>
             </div>
           </div>
         </aside>
 
-        <section class="lg:col-span-3 glass-card rounded-2xl border border-white/10 p-5">
-          <div class="mb-3 text-xs text-slate-400">
-            Tip: turunkan skala + kualitas untuk kompresi lebih agresif, atau pilih ukuran khusus
-            saat membuat icon.
+        <section class="lg:col-span-8 flex flex-col gap-6">
+          
+          <!-- Main Preview Box -->
+          <div class="glass-card rounded-2xl border border-white/10 p-5 flex flex-col h-[400px]">
+            <div class="mb-3 flex items-center justify-between border-b border-white/10 pb-2">
+              <h2 class="text-sm font-semibold text-white">Preview Gambar</h2>
+              <span id="preview-active-name" class="text-xs text-cyan-300 truncate max-w-[200px] sm:max-w-[300px]">-</span>
+            </div>
+            <div class="checkerboard rounded-xl border border-white/10 flex-1 grid place-items-center relative overflow-hidden">
+              <img id="main-preview-img" class="max-w-full max-h-[300px] object-contain rounded-lg shadow-2xl hidden transition-opacity duration-300" />
+              <div id="main-preview-empty" class="text-slate-500 text-sm flex flex-col items-center gap-2">
+                <i class="fa-regular fa-image text-4xl opacity-50 mb-1"></i>
+                <span>Pilih gambar dari daftar di bawah</span>
+              </div>
+            </div>
           </div>
-          <div
-            class="checkerboard rounded-xl border border-white/10 min-h-[280px] md:min-h-[460px] grid place-items-center"
-          >
-            <canvas
-              id="preview-canvas"
-              class="max-w-full max-h-[70vh] object-contain rounded-lg shadow-2xl"
-            ></canvas>
+
+          <!-- Horizontal List -->
+          <div class="glass-card rounded-2xl border border-white/10 p-4 flex flex-col h-[280px]">
+            <div class="mb-3 border-b border-white/10 pb-3">
+              <div class="flex items-center justify-between mb-2">
+                <h2 class="text-sm font-semibold text-white">Daftar File (<span id="file-count">0</span>)</h2>
+                <div class="text-xs text-slate-400 font-medium transition-colors" id="global-status">Menunggu file...</div>
+              </div>
+              <!-- Progress Bar -->
+              <div class="w-full h-1.5 bg-slate-800/80 rounded-full overflow-hidden hidden" id="progress-container">
+                <div id="global-progress" class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 w-0 relative" style="transition: width 0.3s ease;">
+                  <div class="absolute top-0 left-0 w-full h-full bg-white/20 animate-pulse"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div id="file-list-container" class="flex-1 overflow-x-auto pb-2 custom-scrollbar-x relative">
+              <div id="empty-state" class="absolute inset-0 flex flex-col items-center justify-center text-slate-500">
+                <div class="w-12 h-12 rounded-full bg-slate-800/50 flex items-center justify-center mb-2">
+                  <i class="fa-regular fa-images text-xl opacity-50"></i>
+                </div>
+                <p class="font-medium text-slate-400 text-sm">Belum ada gambar yang diupload</p>
+              </div>
+              <div id="file-list" class="flex gap-4 min-w-max h-full relative z-10 px-1"></div>
+            </div>
           </div>
+
         </section>
       </section>
     </main>
@@ -233,17 +249,18 @@
       const iconSettings = document.getElementById("icon-settings");
       const iconSizeSelect = document.getElementById("icon-size");
       const resetBtn = document.getElementById("reset-btn");
-      const downloadBtn = document.getElementById("download-btn");
-      const originalSizeText = document.getElementById("original-size");
-      const outputSizeText = document.getElementById("output-size");
-      const sizeChangeText = document.getElementById("size-change");
-      const canvas = document.getElementById("preview-canvas");
+      const downloadAllBtn = document.getElementById("download-all-btn");
+      const fileListEl = document.getElementById("file-list");
+      const emptyStateEl = document.getElementById("empty-state");
+      const fileCountEl = document.getElementById("file-count");
+      const globalStatusEl = document.getElementById("global-status");
+      const progressContainer = document.getElementById("progress-container");
+      const globalProgress = document.getElementById("global-progress");
 
-      const ctx = canvas.getContext("2d");
-      let imageSrc = "";
-      let originalFileSize = 0;
-      let latestOutputBlob = null;
-      let exportRequestId = 0;
+      let filesData = [];
+      let activeItemId = null;
+      let isProcessing = false;
+      let pendingProcess = false;
 
       function formatBytes(bytes) {
         if (!Number.isFinite(bytes) || bytes <= 0) return "0 B";
@@ -259,36 +276,27 @@
       }
 
       function getFormatMeta(format) {
-        if (format === "jpeg") {
-          return { mime: "image/jpeg", extension: "jpg" };
-        }
-        if (format === "webp") {
-          return { mime: "image/webp", extension: "webp" };
-        }
-        if (format === "svg") {
-          return { mime: "image/svg+xml", extension: "svg" };
-        }
-        if (format === "ico") {
-          return { mime: "image/x-icon", extension: "ico" };
-        }
+        if (format === "jpeg") return { mime: "image/jpeg", extension: "jpg" };
+        if (format === "webp") return { mime: "image/webp", extension: "webp" };
+        if (format === "avif") return { mime: "image/avif", extension: "avif" };
+        if (format === "svg") return { mime: "image/svg+xml", extension: "svg" };
+        if (format === "ico") return { mime: "image/x-icon", extension: "ico" };
         return { mime: "image/png", extension: "png" };
       }
 
       function isLossyFormat(format) {
-        return format === "jpeg" || format === "webp";
+        return format === "jpeg" || format === "webp" || format === "avif";
       }
 
       function isIconFormat(format) {
         return format === "svg" || format === "ico";
       }
 
-      function getDownloadLabel(format) {
-        if (format === "jpeg") return "JPG";
-        return format.toUpperCase();
-      }
-
-      function updateDownloadButtonLabel() {
-        downloadBtn.textContent = `Download ${getDownloadLabel(formatSelect.value)}`;
+      function generateOutputName(originalName, extension) {
+        const parts = originalName.split(".");
+        parts.pop(); 
+        const base = parts.join(".") || "image";
+        return `${base}-dymasyogaf.${extension}`;
       }
 
       function updateQualityVisibility() {
@@ -298,42 +306,13 @@
         qualityWrap.classList.toggle("opacity-60", !lossy);
         iconSettings.classList.toggle("hidden", !iconMode);
         qualityNote.textContent = lossy
-          ? "Berlaku untuk JPG/WEBP."
+          ? "Berlaku untuk format lossy (JPG/WEBP/AVIF)."
           : iconMode
             ? "SVG/ICO memakai ukuran icon, bukan slider kualitas."
             : "PNG lossless, kualitas tidak dipakai.";
       }
 
-      function resetSizeIndicators() {
-        originalSizeText.textContent = "-";
-        outputSizeText.textContent = "-";
-        sizeChangeText.textContent = "-";
-        sizeChangeText.style.color = "";
-      }
-
-      function updateSizeIndicators(outputSize) {
-        originalSizeText.textContent = originalFileSize ? formatBytes(originalFileSize) : "-";
-        outputSizeText.textContent = outputSize ? formatBytes(outputSize) : "-";
-
-        if (!originalFileSize || !outputSize) {
-          sizeChangeText.textContent = "-";
-          sizeChangeText.style.color = "";
-          return;
-        }
-
-        const diff = outputSize - originalFileSize;
-        const percent = (Math.abs(diff) / originalFileSize) * 100;
-
-        if (diff <= 0) {
-          sizeChangeText.style.color = "#86efac";
-          sizeChangeText.textContent = `Lebih kecil ${percent.toFixed(1)}%`;
-        } else {
-          sizeChangeText.style.color = "#fca5a5";
-          sizeChangeText.textContent = `Lebih besar ${percent.toFixed(1)}%`;
-        }
-      }
-
-      function canvasToBlob(type, quality) {
+      function canvasToBlob(canvas, type, quality) {
         return new Promise((resolve) => {
           canvas.toBlob(
             (blob) => {
@@ -341,20 +320,18 @@
                 resolve(blob);
                 return;
               }
-
               const dataUrl = canvas.toDataURL(type, quality);
               const [header, base64] = dataUrl.split(",");
-              const mime =
-                (header.match(/data:(.*?);base64/) || [])[1] || "application/octet-stream";
+              const detectedMime = (header.match(/data:(.*?);base64/) || [])[1] || type;
               const binary = atob(base64 || "");
               const bytes = new Uint8Array(binary.length);
               for (let i = 0; i < binary.length; i += 1) {
                 bytes[i] = binary.charCodeAt(i);
               }
-              resolve(new Blob([bytes], { type: mime }));
+              resolve(new Blob([bytes], { type: detectedMime }));
             },
             type,
-            quality,
+            quality
           );
         });
       }
@@ -398,191 +375,499 @@
         return new Blob([svg], { type: "image/svg+xml" });
       }
 
-      async function generateOutputBlob() {
-        if (!canvas.width || !canvas.height) return null;
-
-        const selectedFormat = formatSelect.value;
-        const quality = Number(qualityInput.value) / 100;
-        const { mime } = getFormatMeta(selectedFormat);
-
-        if (selectedFormat === "svg") {
-          return createSvgBlobFromCanvas(canvas);
+      function updateMainPreview() {
+        const previewImg = document.getElementById("main-preview-img");
+        const previewEmpty = document.getElementById("main-preview-empty");
+        const previewName = document.getElementById("preview-active-name");
+        
+        if (!activeItemId) {
+          previewImg.classList.add("hidden");
+          previewEmpty.classList.remove("hidden");
+          previewName.textContent = "-";
+          return;
         }
-
-        if (selectedFormat === "ico") {
-          const size = Number(iconSizeSelect.value);
-          const pngBlob = await canvasToBlob("image/png");
-          return buildIcoBlobFromPng(pngBlob, size);
+        
+        const item = filesData.find(f => f.id === activeItemId);
+        if (!item) {
+          previewImg.classList.add("hidden");
+          previewEmpty.classList.remove("hidden");
+          previewName.textContent = "-";
+          return;
         }
-
-        if (selectedFormat !== "jpeg") {
-          return canvasToBlob(mime, quality);
+        
+        previewEmpty.classList.add("hidden");
+        previewName.textContent = item.outputName || item.originalName;
+        
+        if (item.status === 'done' && item.blobUrl) {
+          previewImg.src = item.blobUrl;
+        } else {
+          previewImg.src = item.previewUrl;
         }
+        previewImg.classList.remove("hidden");
+      }
 
-        const tempCanvas = document.createElement("canvas");
-        tempCanvas.width = canvas.width;
-        tempCanvas.height = canvas.height;
-        const tempCtx = tempCanvas.getContext("2d");
-        tempCtx.fillStyle = "#ffffff";
-        tempCtx.fillRect(0, 0, tempCanvas.width, tempCanvas.height);
-        tempCtx.drawImage(canvas, 0, 0);
+      window.selectItem = (id) => {
+        activeItemId = id;
+        renderList();
+      };
 
+      async function processFile(fileItem) {
         return new Promise((resolve) => {
-          tempCanvas.toBlob(
-            (blob) => {
-              if (blob) {
-                resolve(blob);
-                return;
+          const format = formatSelect.value;
+          const scale = Number(scaleInput.value) / 100;
+          const quality = Number(qualityInput.value) / 100;
+          const iconSize = Number(iconSizeSelect.value);
+          const { mime, extension } = getFormatMeta(format);
+
+          const img = new Image();
+          
+          img.onerror = () => {
+             console.error("Gagal memuat gambar", fileItem.originalName);
+             fileItem.status = "error";
+             renderList();
+             resolve();
+          };
+
+          img.onload = async () => {
+            try {
+              const canvas = document.createElement("canvas");
+              const ctx = canvas.getContext("2d");
+
+              if (isIconFormat(format)) {
+                const maxWidth = Math.max(1, Math.floor(img.width * scale));
+                const maxHeight = Math.max(1, Math.floor(img.height * scale));
+                const fitRatio = Math.min(iconSize / maxWidth, iconSize / maxHeight);
+                const drawWidth = Math.max(1, Math.floor(maxWidth * fitRatio));
+                const drawHeight = Math.max(1, Math.floor(maxHeight * fitRatio));
+                const offsetX = Math.floor((iconSize - drawWidth) / 2);
+                const offsetY = Math.floor((iconSize - drawHeight) / 2);
+
+                canvas.width = iconSize;
+                canvas.height = iconSize;
+                ctx.clearRect(0, 0, iconSize, iconSize);
+                ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
+              } else {
+                canvas.width = Math.max(1, Math.floor(img.width * scale));
+                canvas.height = Math.max(1, Math.floor(img.height * scale));
+                
+                if (format === "jpeg") {
+                  ctx.fillStyle = "#ffffff";
+                  ctx.fillRect(0, 0, canvas.width, canvas.height);
+                }
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
               }
 
-              const dataUrl = tempCanvas.toDataURL(mime, quality);
-              const [header, base64] = dataUrl.split(",");
-              const detectedMime = (header.match(/data:(.*?);base64/) || [])[1] || mime;
-              const binary = atob(base64 || "");
-              const bytes = new Uint8Array(binary.length);
-              for (let i = 0; i < binary.length; i += 1) {
-                bytes[i] = binary.charCodeAt(i);
+              let blob = null;
+              if (format === "svg") {
+                blob = createSvgBlobFromCanvas(canvas);
+              } else if (format === "ico") {
+                const pngBlob = await canvasToBlob(canvas, "image/png", 1);
+                blob = await buildIcoBlobFromPng(pngBlob, iconSize);
+              } else if (format === "avif") {
+                try {
+                  // Pindahkan proses WASM ke Web Worker agar tidak memblokir Main Thread
+                  if (!window.avifWorker) {
+                    const originalStatus = globalStatusEl.textContent;
+                    globalStatusEl.textContent = "Menginisialisasi Background Worker (sekali saja)...";
+                    
+                    const workerCode = `
+                      let jsquashAvif = null;
+                      self.onmessage = async (e) => {
+                        try {
+                          const { imageData, cqLevel, id } = e.data;
+                          if (!jsquashAvif) {
+                             jsquashAvif = await import('https://esm.sh/@jsquash/avif@1.1.2');
+                          }
+                          const buffer = await jsquashAvif.encode(imageData, { cqLevel });
+                          self.postMessage({ id, buffer, success: true });
+                        } catch (err) {
+                          self.postMessage({ id, error: err.message || "WASM Worker Error", success: false });
+                        }
+                      };
+                    `;
+                    const workerBlob = new Blob([workerCode], { type: 'application/javascript' });
+                    const workerUrl = URL.createObjectURL(workerBlob);
+                    window.avifWorker = new Worker(workerUrl, { type: 'module' });
+                    
+                    globalStatusEl.textContent = originalStatus;
+                  }
+                  
+                  const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                  const cqLevel = Math.max(0, Math.min(63, Math.round((1 - quality) * 63)));
+                  
+                  const buffer = await new Promise((resolveWorker, rejectWorker) => {
+                    const msgId = Math.random().toString(36).substr(2, 9);
+                    
+                    const handler = (e) => {
+                       if (e.data.id === msgId) {
+                          window.avifWorker.removeEventListener('message', handler);
+                          if (e.data.success) {
+                             resolveWorker(e.data.buffer);
+                          } else {
+                             rejectWorker(new Error(e.data.error));
+                          }
+                       }
+                    };
+                    
+                    window.avifWorker.addEventListener('message', handler);
+                    // Transfer buffer agar memori efisien
+                    window.avifWorker.postMessage({ imageData, cqLevel, id: msgId }, [imageData.data.buffer]);
+                  });
+                  
+                  blob = new Blob([buffer], { type: 'image/avif' });
+                } catch (wasmErr) {
+                  console.error("WASM AVIF Worker Error, fallback to native canvas API:", wasmErr);
+                  blob = await canvasToBlob(canvas, mime, quality);
+                }
+              } else {
+                blob = await canvasToBlob(canvas, mime, quality);
               }
-              resolve(new Blob([bytes], { type: detectedMime }));
-            },
-            mime,
-            quality,
-          );
+
+              let finalExtension = extension;
+              if (blob && blob.type !== mime && format !== "svg" && format !== "ico") {
+                 if (blob.type === "image/png") finalExtension = "png";
+                 else if (blob.type === "image/jpeg") finalExtension = "jpg";
+                 fileItem.warning = `Browser tidak support ${format.toUpperCase()}, dialihkan ke ${finalExtension.toUpperCase()}`;
+              }
+
+              fileItem.blob = blob;
+              fileItem.outputSize = blob.size;
+              fileItem.outputName = generateOutputName(fileItem.originalName, finalExtension);
+              fileItem.status = "done";
+              
+              if (fileItem.blobUrl) URL.revokeObjectURL(fileItem.blobUrl);
+              fileItem.blobUrl = URL.createObjectURL(blob);
+              
+              renderList();
+              resolve();
+            } catch (err) {
+              console.error("Error processing file", err);
+              fileItem.status = "error";
+              renderList();
+              resolve();
+            }
+          };
+          img.src = fileItem.previewUrl;
         });
       }
 
-      async function refreshExportPreview() {
-        if (!imageSrc || !canvas.width || !canvas.height) {
-          latestOutputBlob = null;
-          updateSizeIndicators(0);
-          downloadBtn.disabled = true;
+      async function processAll(forceReprocess = false) {
+        try {
+          if (filesData.length === 0) return;
+          
+          if (isProcessing) {
+             pendingProcess = true;
+             return;
+          }
+          
+          isProcessing = true;
+          
+          do {
+             pendingProcess = false;
+             for (const item of filesData) {
+               if (forceReprocess || item.status === "error" || item.status === "processing") {
+                 item.status = "processing";
+               }
+             }
+             renderList();
+             
+             for (const item of filesData) {
+               if (item.status === "processing") {
+                  await processFile(item);
+               }
+             }
+             // Turn off forceReprocess for subsequent loops if new files are added during processing
+             forceReprocess = false; 
+          } while (pendingProcess);
+          
+          isProcessing = false;
+          renderList(); // Final render to update ZIP button state
+        } catch (error) {
+          console.error("Critical error in processAll:", error);
+          alert("Error pemrosesan: " + error.message);
+          isProcessing = false;
+        }
+      }
+
+      function renderList() {
+        if (filesData.length === 0) {
+          fileListEl.innerHTML = "";
+          emptyStateEl.style.display = "flex";
+          fileCountEl.textContent = "0";
+          downloadAllBtn.disabled = true;
+          globalStatusEl.textContent = "Menunggu file...";
+          globalStatusEl.className = "text-xs text-slate-400 font-medium";
+          updateMainPreview();
           return;
         }
 
-        const requestId = ++exportRequestId;
-        const blob = await generateOutputBlob();
-        if (requestId !== exportRequestId) return;
-
-        latestOutputBlob = blob;
-        updateSizeIndicators(blob ? blob.size : 0);
-        downloadBtn.disabled = !blob;
-      }
-
-      function drawImageToCanvas(img) {
-        const scale = Number(scaleInput.value) / 100;
-        const selectedFormat = formatSelect.value;
-
-        if (isIconFormat(selectedFormat)) {
-          const iconSize = Number(iconSizeSelect.value);
-          const maxWidth = Math.max(1, Math.floor(img.width * scale));
-          const maxHeight = Math.max(1, Math.floor(img.height * scale));
-          const fitRatio = Math.min(iconSize / maxWidth, iconSize / maxHeight);
-          const drawWidth = Math.max(1, Math.floor(maxWidth * fitRatio));
-          const drawHeight = Math.max(1, Math.floor(maxHeight * fitRatio));
-          const offsetX = Math.floor((iconSize - drawWidth) / 2);
-          const offsetY = Math.floor((iconSize - drawHeight) / 2);
-
-          canvas.width = iconSize;
-          canvas.height = iconSize;
-          ctx.clearRect(0, 0, iconSize, iconSize);
-          ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
-          return;
+        emptyStateEl.style.display = "none";
+        fileCountEl.textContent = filesData.length;
+        
+        const total = filesData.length;
+        const doneCount = filesData.filter(f => f.status === "done" || f.status === "error").length;
+        const percent = total === 0 ? 0 : Math.round((doneCount / total) * 100);
+        
+        // Logika "Smooth Fake Progress" untuk file yang sedang diproses
+        let displayPercent = percent;
+        if (isProcessing && percent < 100) {
+           const activeBoost = Math.round((1 / total) * 90); 
+           displayPercent = Math.min(99, percent + activeBoost);
         }
 
-        const newWidth = Math.max(1, Math.floor(img.width * scale));
-        const newHeight = Math.max(1, Math.floor(img.height * scale));
-
-        canvas.width = newWidth;
-        canvas.height = newHeight;
-        ctx.clearRect(0, 0, newWidth, newHeight);
-        ctx.drawImage(img, 0, 0, newWidth, newHeight);
-      }
-
-      async function processImage() {
-        if (!imageSrc) return;
-
-        const img = new Image();
-        img.onload = async () => {
-          drawImageToCanvas(img);
-          await refreshExportPreview();
-        };
-        img.src = imageSrc;
-      }
-
-      function resetState() {
-        imageSrc = "";
-        originalFileSize = 0;
-        latestOutputBlob = null;
-        exportRequestId += 1;
-        fileName.textContent = "Belum ada file dipilih";
-        scaleInput.value = "100";
-        scaleValue.textContent = "100";
-        formatSelect.value = "jpeg";
-        qualityInput.value = "85";
-        qualityValue.textContent = "85";
-        iconSizeSelect.value = "64";
-        canvas.width = 0;
-        canvas.height = 0;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        downloadBtn.disabled = true;
-        resetSizeIndicators();
-        updateQualityVisibility();
-        updateDownloadButtonLabel();
-      }
-
-      function onFileChange(event) {
-        const file = event.target.files && event.target.files[0];
-        if (!file) return;
-
-        fileName.textContent = file.name;
-        originalFileSize = file.size;
-        updateSizeIndicators(0);
-
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          imageSrc = e.target && e.target.result ? e.target.result : "";
-          processImage();
-        };
-        reader.readAsDataURL(file);
-      }
-
-      async function downloadImage() {
-        if (!latestOutputBlob) {
-          await refreshExportPreview();
+        if (total > 0) {
+           progressContainer.classList.remove("hidden");
+           // Jika sedang memproses, jalankan transisi sangat lambat (15 detik) agar bar merayap naik perlahan
+           globalProgress.style.transition = (isProcessing && percent < 100) ? 'width 15s cubic-bezier(0.05, 0.7, 0.1, 1)' : 'width 0.4s ease';
+           
+           // Hindari animasi mundur jika reset
+           if (displayPercent === 0) globalProgress.style.transition = 'none';
+           
+           // Paksa reflow agar browser menerima perubahan transition sebelum width
+           void globalProgress.offsetWidth; 
+           globalProgress.style.width = `${displayPercent}%`;
+        } else {
+           progressContainer.classList.add("hidden");
+           globalProgress.style.transition = 'none';
+           globalProgress.style.width = `0%`;
         }
-        if (!latestOutputBlob) return;
+        
+        const allProcessed = doneCount === total && total > 0;
+        const hasAnyDone = filesData.some(f => f.status === "done");
+        downloadAllBtn.disabled = !(allProcessed && hasAnyDone && !isProcessing);
+        
+        if (isProcessing) {
+           globalStatusEl.textContent = `Memproses... ${displayPercent}%`;
+           globalStatusEl.className = "text-xs text-cyan-400 font-medium";
+        } else {
+           globalStatusEl.textContent = hasAnyDone ? "Selesai diproses" : "Menunggu file...";
+           globalStatusEl.className = hasAnyDone ? "text-xs text-green-400 font-medium" : "text-xs text-slate-400 font-medium";
+        }
 
-        const selectedFormat = formatSelect.value;
-        const { extension } = getFormatMeta(selectedFormat);
-        const url = URL.createObjectURL(latestOutputBlob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `compress-convert-${Date.now()}.${extension}`;
-        link.click();
-        URL.revokeObjectURL(url);
+        fileListEl.innerHTML = "";
+        filesData.forEach(item => {
+          const div = document.createElement("div");
+          div.onclick = () => selectItem(item.id);
+          const isActive = activeItemId === item.id;
+          
+          div.className = `w-48 h-full flex-shrink-0 flex flex-col bg-slate-900/50 border rounded-xl p-3 transition group cursor-pointer relative ${
+            isActive ? 'border-cyan-500 ring-1 ring-cyan-500 bg-slate-800/80 shadow-[0_0_15px_rgba(6,182,212,0.15)]' : 'border-white/5 hover:bg-slate-800/50'
+          }`;
+          
+          let sizeDiffHtml = "";
+          if (item.status === "done") {
+             const diff = item.outputSize - item.originalSize;
+             const percent = (Math.abs(diff) / item.originalSize) * 100;
+             if (diff <= 0) {
+                sizeDiffHtml = `<span class="text-green-400 text-[10px] font-medium bg-green-400/10 px-1.5 py-0.5 rounded"><i class="fa-solid fa-arrow-down mr-0.5"></i>${percent.toFixed(1)}%</span>`;
+             } else {
+                sizeDiffHtml = `<span class="text-red-400 text-[10px] font-medium bg-red-400/10 px-1.5 py-0.5 rounded"><i class="fa-solid fa-arrow-up mr-0.5"></i>${percent.toFixed(1)}%</span>`;
+             }
+          } else if (item.status === "error") {
+             sizeDiffHtml = `<span class="text-red-400 text-[10px] font-medium bg-red-400/10 px-1.5 py-0.5 rounded">Error</span>`;
+          }
+
+          div.innerHTML = `
+            <div class="w-full h-24 rounded-lg bg-slate-800 flex-shrink-0 overflow-hidden border border-white/10 checkerboard mb-3 relative">
+               <img src="${item.previewUrl}" class="w-full h-full object-contain pointer-events-none" />
+               ${item.status !== 'done' ? `
+                 <div class="absolute inset-0 bg-slate-900/60 flex items-center justify-center backdrop-blur-[1px]">
+                   <i class="fa-solid fa-circle-notch fa-spin text-cyan-400 text-xl"></i>
+                 </div>
+               ` : ''}
+            </div>
+            
+            <p class="text-xs font-semibold text-slate-200 truncate mb-1" title="${item.outputName || item.originalName}">
+               ${item.outputName || item.originalName}
+            </p>
+            
+            ${item.warning ? `<p class="text-[9px] text-amber-400 bg-amber-400/10 border border-amber-400/20 px-1.5 py-0.5 rounded mb-1.5 leading-tight"><i class="fa-solid fa-triangle-exclamation mr-0.5"></i> ${item.warning}</p>` : ''}
+            
+            <div class="flex items-center justify-between mt-auto mb-3">
+               <span class="text-[10px] text-slate-400 leading-tight">
+                 ${formatBytes(item.originalSize)} <i class="fa-solid fa-arrow-right mx-0.5 text-slate-600"></i> <br/>
+                 <span class="text-slate-300 font-medium">${item.status === 'done' ? formatBytes(item.outputSize) : (item.status === 'error' ? 'Gagal' : '...')}</span>
+               </span>
+               ${sizeDiffHtml}
+            </div>
+            
+            <div class="flex items-center gap-2 mt-auto">
+               <button onclick="downloadSingle('${item.id}'); event.stopPropagation();" class="flex-1 py-1.5 rounded-lg bg-slate-800 hover:bg-cyan-500/20 hover:text-cyan-400 hover:border-cyan-500/30 text-slate-300 flex items-center justify-center transition border border-white/10 text-xs gap-1 disabled:opacity-50 disabled:cursor-not-allowed" ${item.status !== 'done' ? 'disabled' : ''}>
+                 <i class="fa-solid fa-download"></i> Unduh
+               </button>
+               <button onclick="removeFile('${item.id}'); event.stopPropagation();" class="w-8 py-1.5 rounded-lg bg-slate-800 hover:bg-red-500/20 hover:text-red-400 hover:border-red-500/30 text-slate-300 flex items-center justify-center transition border border-white/10">
+                 <i class="fa-solid fa-trash-can text-xs"></i>
+               </button>
+            </div>
+          `;
+          fileListEl.appendChild(div);
+        });
+
+        updateMainPreview();
       }
 
-      fileInput.addEventListener("change", onFileChange);
+      fileInput.addEventListener("change", async (event) => {
+        try {
+          const files = Array.from(event.target.files);
+          if (files.length === 0) return;
+
+          const wasEmpty = filesData.length === 0;
+
+          for (const file of files) {
+             const id = Math.random().toString(36).substr(2, 9);
+             const previewUrl = URL.createObjectURL(file);
+             filesData.push({
+                id,
+                file,
+                originalName: file.name,
+                originalSize: file.size,
+                previewUrl,
+                blobUrl: null,
+                blob: null,
+                outputSize: 0,
+                outputName: "",
+                status: "processing"
+             });
+          }
+          
+          if (wasEmpty && filesData.length > 0) {
+            activeItemId = filesData[0].id;
+          }
+
+          fileName.textContent = `${filesData.length} file dipilih`;
+          renderList();
+          await processAll(false);
+          fileInput.value = "";
+        } catch (error) {
+          console.error("Critical error in upload:", error);
+          alert("Gagal memuat gambar: " + error.message);
+        }
+      });
+      
+      const dropZone = fileInput.closest('label');
+      
+      dropZone.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        dropZone.classList.add('border-cyan-400', 'bg-cyan-900/20');
+      });
+
+      dropZone.addEventListener('dragleave', (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-cyan-400', 'bg-cyan-900/20');
+      });
+
+      dropZone.addEventListener('drop', async (e) => {
+        e.preventDefault();
+        dropZone.classList.remove('border-cyan-400', 'bg-cyan-900/20');
+        
+        if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+           fileInput.files = e.dataTransfer.files;
+           fileInput.dispatchEvent(new Event('change'));
+        }
+      });
+
+      downloadAllBtn.addEventListener("click", async () => {
+        if (filesData.length === 0) return;
+        const zip = new JSZip();
+        
+        filesData.forEach(item => {
+           if (item.blob) {
+              zip.file(item.outputName, item.blob);
+           }
+        });
+        
+        downloadAllBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Membuat ZIP...`;
+        downloadAllBtn.disabled = true;
+
+        try {
+          const zipBlob = await zip.generateAsync({ type: "blob" });
+          const url = URL.createObjectURL(zipBlob);
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = `RPL-CompressConvert-${Date.now()}.zip`;
+          link.click();
+          URL.revokeObjectURL(url);
+        } catch (e) {
+          console.error("ZIP Error", e);
+          alert("Gagal membuat ZIP");
+        } finally {
+          downloadAllBtn.innerHTML = `<i class="fa-solid fa-file-zipper"></i> ZIP Semua`;
+          downloadAllBtn.disabled = false;
+        }
+      });
+
+      window.downloadSingle = (id) => {
+         const item = filesData.find(f => f.id === id);
+         if (!item || !item.blob) return;
+         const url = URL.createObjectURL(item.blob);
+         const link = document.createElement("a");
+         link.href = url;
+         link.download = item.outputName;
+         link.click();
+         URL.revokeObjectURL(url);
+      };
+
+      window.removeFile = (id) => {
+         const item = filesData.find(f => f.id === id);
+         if (item) {
+           if (item.blobUrl) URL.revokeObjectURL(item.blobUrl);
+           if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+         }
+
+         filesData = filesData.filter(f => f.id !== id);
+         
+         if (activeItemId === id) {
+           activeItemId = filesData.length > 0 ? filesData[0].id : null;
+         }
+
+         if (filesData.length === 0) {
+            fileName.textContent = "Bisa pilih banyak gambar sekaligus";
+         } else {
+            fileName.textContent = `${filesData.length} file dipilih`;
+         }
+         renderList();
+      };
+
+      resetBtn.addEventListener("click", () => {
+         filesData.forEach(item => {
+           if (item.blobUrl) URL.revokeObjectURL(item.blobUrl);
+           if (item.previewUrl) URL.revokeObjectURL(item.previewUrl);
+         });
+         filesData = [];
+         activeItemId = null;
+         fileName.textContent = "Bisa pilih banyak gambar sekaligus";
+         scaleInput.value = "100";
+         scaleValue.textContent = "100";
+         formatSelect.value = "jpeg";
+         qualityInput.value = "85";
+         qualityValue.textContent = "85";
+         iconSizeSelect.value = "64";
+         updateQualityVisibility();
+         renderList();
+      });
+
       scaleInput.addEventListener("input", () => {
         scaleValue.textContent = scaleInput.value;
-        processImage();
       });
+      scaleInput.addEventListener("change", () => processAll(true));
+
       formatSelect.addEventListener("change", () => {
-        updateDownloadButtonLabel();
         updateQualityVisibility();
-        processImage();
+        processAll(true);
       });
-      iconSizeSelect.addEventListener("change", processImage);
+
+      iconSizeSelect.addEventListener("change", () => processAll(true));
+
       qualityInput.addEventListener("input", () => {
         qualityValue.textContent = qualityInput.value;
+      });
+      qualityInput.addEventListener("change", () => {
         if (isLossyFormat(formatSelect.value)) {
-          refreshExportPreview();
+          processAll(true);
         }
       });
-      downloadBtn.addEventListener("click", downloadImage);
-      resetBtn.addEventListener("click", resetState);
 
-      resetState();
+      updateQualityVisibility();
     </script>
 
     <style>
@@ -599,6 +884,20 @@
           12px -12px,
           -12px 0;
         background-color: #0f172a;
+      }
+      .custom-scrollbar-x::-webkit-scrollbar {
+        height: 8px;
+      }
+      .custom-scrollbar-x::-webkit-scrollbar-track {
+        background: rgba(255, 255, 255, 0.02);
+        border-radius: 10px;
+      }
+      .custom-scrollbar-x::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 10px;
+      }
+      .custom-scrollbar-x::-webkit-scrollbar-thumb:hover {
+        background: rgba(255, 255, 255, 0.2);
       }
     </style>
   </body>
